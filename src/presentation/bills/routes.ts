@@ -1,5 +1,5 @@
 import { Request, RequestHandler, Response, Router } from "express";
-import { BillsController } from "./controller";
+import { BillsController } from "./controllers";
 
 export class BillsRoutes {
     static get routes(): Router {

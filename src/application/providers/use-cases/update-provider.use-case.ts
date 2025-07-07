@@ -1,0 +1,10 @@
+import { Provider } from "../../../domain/providers/provider.entity";
+import { ProviderRepository } from "../../../domain/providers/provider.repository";
+
+
+export class UpdateProvider {
+    constructor(private repository: ProviderRepository) { }
+    execute(term: string, provider: Provider): Provider | null {
+        return this.repository.update(term, provider);
+    }
+}
