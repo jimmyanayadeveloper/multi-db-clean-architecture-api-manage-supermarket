@@ -1,3 +1,11 @@
+import { RegisterUserDto } from "../../../domain/users";
+import { UserToken } from "../interfaces/usertoken";
+
+export interface RegisterUserUseCase {
+    execute(dto: RegisterUserDto): Promise<UserToken>
+}
+
+/* 
 import { LoginUserDto } from "../../users/dto/login-user-dto";
 import { AuthRepository } from '../../repositories/auth.repository';
 import { JwtAdapter } from "../../../config";
@@ -33,4 +41,4 @@ export class LoginUser implements LoginUserUseCase {
             user
         }
     }
-}
+} */

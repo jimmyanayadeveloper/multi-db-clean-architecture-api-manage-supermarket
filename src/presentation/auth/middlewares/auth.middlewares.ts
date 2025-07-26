@@ -1,6 +1,6 @@
 import { NextFunction, Request, RequestHandler, Response } from "express";
 import { JwtAdapter } from "../../../config";
-import { UserModel } from "../../../data/mongodb";
+import { UserMongoseModel } from "../../../infrastructure/database/mongo/models/user.model";
 
 export class AuthMiddleware {
     static validateJWT: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
@@ -26,7 +26,7 @@ export class AuthMiddleware {
                 res.status(401).json({ error: 'Invalid token - user not found' });
                 return;
             }
-            const user = await UserModel.findById(payload.id);
+            const user = await UserMongoseModel.findById(payload.id);
             if (!user) {
                 res.status(401).json({ error: 'Invalid token - user not found' });
                 return;

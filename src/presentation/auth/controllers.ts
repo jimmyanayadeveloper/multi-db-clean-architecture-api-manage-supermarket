@@ -1,17 +1,15 @@
 import { Request, Response } from "express";
 import { RegisterUserDto } from "../../domain/users";
-import { AuthRepository } from "../../domain/repositories/auth.repository";
-import { CustomError, RegisterUser } from "../../domain";
-import { JwtAdapter } from "../../config";
-import { UserModel } from "../../data/mongodb";
-import { LoginUserDto } from '../../domain/users/dto/login-user-dto';
-import { LoginUser } from "../../domain/uses-cases/auth/login-user.use-case";
+import { CustomError } from "../../domain";
+import { UserMongoseModel } from "../../infrastructure/database/mongo/models/user.model";
+import { RegisterUser } from "../../application/user/use-cases/register-user.use-case";
+import { AuthenticationUserRepository } from "../../domain/users/repository/authentication.repository";
 
 
 export class AuthController {
 
     constructor(
-        private readonly authRepository: AuthRepository
+        private readonly authRepository: AuthenticationUserRepository
     ) { }
 
     private handleError = (error: unknown, res: Response) => {
@@ -29,17 +27,17 @@ export class AuthController {
             .catch(error => this.handleError(error, res))
     }
 
-    public loginUser = (req: Request, res: Response): void => {
+    /* public loginUser = (req: Request, res: Response): void => {
         const [error, loginUserDto] = LoginUserDto.login(req.body);
         if (error) res.status(400).json({ error });
         new LoginUser(this.authRepository)
             .execute(loginUserDto!)
             .then(data => res.json(data))
             .catch(error => this.handleError(error, res))
-    }
+    } */
 
     public getUser = (req: Request, res: Response) => {
-        UserModel.find().then(users => {
+        UserMongoseModel.find().then(users => {
             res.json({ user: req.body.user })
         }).catch(() => res.status(500).json({ error: 'Internal server error' }))
     }
