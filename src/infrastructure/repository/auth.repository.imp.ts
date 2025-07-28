@@ -1,11 +1,9 @@
-import { UserEntity } from "../../domain";
-import { AuthDatasource } from "../../domain/datasources/auth.datasources";
-import { AuthRepository } from "../../domain/repositories/auth.repository";
-import { RegisterUserDto } from "../../domain/users";
+import { AuthenticationDatasource, AuthenticationUserRepository, RegisterUserDto } from "../../domain/users";
 import { LoginUserDto } from "../../domain/users/dto/login-user-dto";
+import { UserEntity } from "../../domain";
 
-export class AuthRepositoryImp implements AuthRepository {
-    constructor(private readonly authDatasource: AuthDatasource) { }
+export class AuthRepositoryImp implements AuthenticationUserRepository {
+    constructor(private readonly authDatasource: AuthenticationDatasource) { }
     login(loginUserDto: LoginUserDto): Promise<UserEntity> {
         return this.authDatasource.login(loginUserDto);
     }

@@ -1,15 +1,19 @@
 import { Request, Response } from "express";
-import { RegisterUserDto } from "../../domain/users";
+import { LoginUserDto, RegisterUserDto } from "../../domain/users";
 import { CustomError } from "../../domain";
 import { UserMongoseModel } from "../../infrastructure/database/mongo/models/user.model";
 import { RegisterUser } from "../../application/user/use-cases/register-user.use-case";
-import { AuthenticationUserRepository } from "../../domain/users/repository/authentication.repository";
+import { LoginUser } from "../../application/user/use-cases/login-user.use-case";
 
+interface AuthControllerDeps {
+    registerUserUseCase: RegisterUser;
+    loginUserUseCase: LoginUser;
+}
 
 export class AuthController {
 
     constructor(
-        private readonly authRepository: AuthenticationUserRepository
+        private readonly authDependencies: AuthControllerDeps
     ) { }
 
     private handleError = (error: unknown, res: Response) => {
@@ -21,20 +25,20 @@ export class AuthController {
     public registerUser = (req: Request, res: Response): void => {
         const [error, registerUserDto] = RegisterUserDto.create(req.body);
         if (error) res.status(400).json({ error });
-        new RegisterUser(this.authRepository)
+        this.authDependencies.registerUserUseCase
             .execute(registerUserDto!)
             .then(data => res.json(data))
             .catch(error => this.handleError(error, res))
     }
 
-    /* public loginUser = (req: Request, res: Response): void => {
+    public loginUser = (req: Request, res: Response): void => {
         const [error, loginUserDto] = LoginUserDto.login(req.body);
         if (error) res.status(400).json({ error });
-        new LoginUser(this.authRepository)
+        this.authDependencies.loginUserUseCase
             .execute(loginUserDto!)
             .then(data => res.json(data))
             .catch(error => this.handleError(error, res))
-    } */
+    }
 
     public getUser = (req: Request, res: Response) => {
         UserMongoseModel.find().then(users => {
