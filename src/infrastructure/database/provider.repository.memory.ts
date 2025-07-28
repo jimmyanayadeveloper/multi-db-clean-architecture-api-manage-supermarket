@@ -1,4 +1,4 @@
-import { Provider } from "../../domain/providers/provider.entity";
+import { Provider } from "../../domain/providers/entities/provider.entity";
 import { ProviderRepository } from "../../domain/providers/provider.repository";
 
 export const fakeProviders: Provider[] = [

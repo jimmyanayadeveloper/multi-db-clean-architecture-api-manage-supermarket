@@ -1,4 +1,4 @@
-import { Provider } from "./provider.entity";
+import { Provider } from "./entities/provider.entity";
 
 export interface ProviderRepository {
     createProvider(provider: Provider): Provider;
