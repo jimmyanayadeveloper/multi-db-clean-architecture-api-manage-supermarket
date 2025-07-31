@@ -3,10 +3,10 @@ import { UpdateProviderDto } from "../dto/update-provider-dto";
 import { ProviderEntity } from "../entities/provider.entity";
 
 
-export interface ProviderDatasource {
-    create(createProvider: CreateProviderDto): Promise<ProviderEntity>;
-    edit(updateProvider: UpdateProviderDto): Promise<ProviderEntity>;
+export interface ProviderRepository {
+    create(provider: CreateProviderDto): Promise<ProviderEntity>;
+    edit(term: string, update: UpdateProviderDto): ProviderEntity | null;
+    delete(term: string): boolean
     findByTerm(term: string): Promise<ProviderEntity[]>;
     showAll(): Promise<ProviderEntity[]>;
-    inactive(): void;
 }

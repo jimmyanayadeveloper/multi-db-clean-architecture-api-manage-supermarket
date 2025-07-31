@@ -1,92 +1,93 @@
-import { Provider } from "../../domain/providers/entities/provider.entity";
-import { ProviderRepository } from "../../domain/providers/provider.repository";
 
-export const fakeProviders: Provider[] = [
+import { ProviderEntity } from "../../domain/providers";
+import { ProviderRepository } from "../../domain/providers/repository/provider.repository";
+
+export const fakeProviders: ProviderEntity[] = [
     {
         name: "Proveedor Alfa",
         nit: "900123456-1",
-        salemen: "Carlos Ruiz",
+        salesman: "Carlos Ruiz",
         creditBalance: 50000,
-        withholdingsTaxes: true,
+        withHoldingsTaxes: true,
         saleWithCredit: true
     },
     {
         name: "Distribuidora Beta",
         nit: "800987654-3",
-        salemen: "Lucía Gómez",
+        salesman: "Lucía Gómez",
         creditBalance: 120000,
-        withholdingsTaxes: false,
+        withHoldingsTaxes: false,
         saleWithCredit: true
     },
     {
         name: "Suministros Gamma",
         nit: "901112233-9",
-        salemen: "Juan Pérez",
+        salesman: "Juan Pérez",
         creditBalance: 35000,
-        withholdingsTaxes: true,
+        withHoldingsTaxes: true,
         saleWithCredit: false
     },
     {
         name: "Servicios Delta",
         nit: "900998877-4",
-        salemen: "Mariana Torres",
+        salesman: "Mariana Torres",
         creditBalance: 0,
-        withholdingsTaxes: false,
+        withHoldingsTaxes: false,
         saleWithCredit: false
     },
     {
         name: "Comercial Epsilon",
         nit: "890123789-2",
-        salemen: "Andrés Herrera",
+        salesman: "Andrés Herrera",
         creditBalance: 89000,
-        withholdingsTaxes: true,
+        withHoldingsTaxes: true,
         saleWithCredit: true
     },
     {
         name: "Proveedor Zeta",
         nit: "901554433-6",
-        salemen: "Paola Jiménez",
+        salesman: "Paola Jiménez",
         creditBalance: 14500,
-        withholdingsTaxes: false,
+        withHoldingsTaxes: false,
         saleWithCredit: true
     },
     {
         name: "Importaciones Eta",
         nit: "800345678-1",
-        salemen: "Felipe Rojas",
+        salesman: "Felipe Rojas",
         creditBalance: 65000,
-        withholdingsTaxes: true,
+        withHoldingsTaxes: true,
         saleWithCredit: true
     },
     {
         name: "Tecnología Theta",
         nit: "901667788-5",
-        salemen: "Laura Ramírez",
+        salesman: "Laura Ramírez",
         creditBalance: 27500,
-        withholdingsTaxes: true,
+        withHoldingsTaxes: true,
         saleWithCredit: false
     },
     {
         name: "Papelería Iota",
         nit: "830001122-0",
-        salemen: "Oscar López",
+        salesman: "Oscar López",
         creditBalance: 105000,
-        withholdingsTaxes: false,
+        withHoldingsTaxes: false,
         saleWithCredit: true
     },
     {
         name: "Transportes Kappa",
         nit: "900777888-2",
-        salemen: "Verónica Díaz",
+        salesman: "Verónica Díaz",
         creditBalance: 34000,
-        withholdingsTaxes: true,
+        withHoldingsTaxes: true,
         saleWithCredit: true
     }
 ];
 
 
-export class InMemoriaProviderRepository implements ProviderRepository {
-    createProvider(provider: Provider): Provider {
+/* export class InMemoriaProviderRepository implements ProviderRepository {
+    createProvider(provider: ProviderEntity): ProviderEntity {
         fakeProviders.push(provider);
         return provider;
     }
@@ -112,4 +113,4 @@ export class InMemoriaProviderRepository implements ProviderRepository {
         Object.assign(provider, update);
         return provider;
     }
-}
+} */

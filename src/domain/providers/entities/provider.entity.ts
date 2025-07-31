@@ -2,9 +2,9 @@ export class ProviderEntity {
     constructor(
         public name: string,
         public nit: string,
-        public salemen: string,
+        public salesman: string,
         public creditBalance: number,
-        public withholdingsTaxes: boolean,
+        public withHoldingsTaxes: boolean,
         public saleWithCredit: boolean
     ) { }
 }

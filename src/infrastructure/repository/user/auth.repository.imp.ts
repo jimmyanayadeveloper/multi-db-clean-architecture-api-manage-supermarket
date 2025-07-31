@@ -1,6 +1,6 @@
-import { AuthenticationDatasource, AuthenticationUserRepository, RegisterUserDto } from "../../domain/users";
-import { LoginUserDto } from "../../domain/users/dto/login-user-dto";
-import { UserEntity } from "../../domain";
+import { AuthenticationDatasource, AuthenticationUserRepository, RegisterUserDto } from "../../../domain/users";
+import { LoginUserDto } from "../../../domain/users/dto/login-user-dto";
+import { UserEntity } from "../../../domain";
 
 export class AuthRepositoryImp implements AuthenticationUserRepository {
     constructor(private readonly authDatasource: AuthenticationDatasource) { }

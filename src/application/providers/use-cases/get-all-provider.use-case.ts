@@ -1,8 +1,10 @@
-import { ProviderRepository } from "../../../domain/providers/provider.repository";
+import { ProviderEntity } from "../../../domain/providers";
+import { ProviderRepository } from "../../../domain/providers/repository/provider.repository";
+import { ShowAllProviderUseCase } from "../../../domain/providers/use-cases/show-all-provider.use-case";
 
-export class GetAllProvider {
+export class ShowAllProvider implements ShowAllProviderUseCase {
     constructor(private repository: ProviderRepository) { }
-    execute() {
-        return this.repository.getAllProvider();
+    async execute(): Promise<ProviderEntity[]> {
+        return this.repository.showAll();;
     }
 }

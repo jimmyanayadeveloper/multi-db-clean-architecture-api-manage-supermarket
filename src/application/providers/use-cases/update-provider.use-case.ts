@@ -1,5 +1,5 @@
 import { Provider } from "../../../domain/providers/entities/provider.entity";
-import { ProviderRepository } from "../../../domain/providers/provider.repository";
+import { ProviderRepository } from "../../../domain/providers/repository/provider.repository";
 
 
 export class UpdateProvider {

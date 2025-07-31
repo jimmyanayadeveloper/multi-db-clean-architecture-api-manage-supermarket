@@ -1,12 +1,10 @@
 import { Router } from "express";
 import { AuthMiddleware } from "./middlewares/auth.middlewares";
-import { Dependencies } from "../../config/dependencies";
+import { AuthController } from "./controllers";
 
 export class AuthRoutes {
-    static get routes(): Router {
+    static routes({ authController }: { authController: AuthController }): Router {
         const router = Router();
-
-        const { authController } = Dependencies;
 
         router.post('/login', authController.loginUser);
         router.post('/register', authController.registerUser);

@@ -1,8 +1,8 @@
 export interface ProviderPartial {
     name: string;
     nit: string;
-    salemen: string;
+    salesman: string;
     creditBalance?: number;
-    withholdingsTaxes?: boolean;
+    withHoldingsTaxes?: boolean;
     saleWithCredit?: boolean;
 }

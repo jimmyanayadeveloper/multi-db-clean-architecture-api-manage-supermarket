@@ -8,24 +8,24 @@ export class UpdateProviderDto {
 
     public name?: string;
     public nit?: string;
-    public salemen?: string;
+    public salesman?: string;
     public creditBalance?: number;
-    public withholdingsTaxes?: boolean;
+    public withHoldingsTaxes?: boolean;
     public saleWithCredit?: boolean;
 
     constructor({
         name,
         nit,
-        salemen,
+        salesman,
         creditBalance,
-        withholdingsTaxes,
+        withHoldingsTaxes,
         saleWithCredit,
     }: Partial<ProviderPartial>) {
         this.name = name;
         this.nit = nit;
-        this.salemen = salemen;
+        this.salesman = salesman;
         this.creditBalance = creditBalance;
-        this.withholdingsTaxes = withholdingsTaxes;
+        this.withHoldingsTaxes = withHoldingsTaxes;
         this.saleWithCredit = saleWithCredit;
     }
 
@@ -38,9 +38,9 @@ export class UpdateProviderDto {
         const updatedProvider: ProviderPartial = {
             name: object.name ?? providerChange.name,
             nit: object.nit ?? providerChange.nit,
-            salemen: object.salemen ?? providerChange.salemen,
+            salesman: object.salesman ?? providerChange.salesman,
             creditBalance: object.creditBalance ?? providerChange.creditBalance,
-            withholdingsTaxes: object.withholdingsTaxes ?? providerChange.withholdingsTaxes ?? false,
+            withHoldingsTaxes: object.withHoldingsTaxes ?? providerChange.withHoldingsTaxes ?? false,
             saleWithCredit: object.saleWithCredit ?? providerChange.saleWithCredit ?? false
         }
 

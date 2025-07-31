@@ -1,14 +1,19 @@
 import { Router } from "express";
-import { ProviderController } from "./controllers";
+import { ProviderController } from './controllers';
 
 export class ProvidersRoutes {
-    static get routes(): Router {
+    static routes({ providerController }: { providerController: ProviderController }): Router {
         const router = Router();
-        const providerController = new ProviderController();
-        router.get('/', providerController.getAllProviders);
-        router.post('/', providerController.createNewProvider);
+
+
+        router.post('/create', providerController.createNewProvider);
+        router.get('/show-all', providerController.getAllProviders);
+        router.get('/find-by/:term', providerController.getBillByTerm);
+
+        /* 
+        
         router.put('/:term', providerController.updatedProviderByTerm);
-        router.delete('/:term', providerController.deleteProviderByTerm);
+        router.delete('/:term', providerController.deleteProviderByTerm); */
         return router;
     }
 }

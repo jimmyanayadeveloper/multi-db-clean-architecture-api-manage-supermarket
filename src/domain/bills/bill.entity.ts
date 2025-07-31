@@ -1,7 +1,7 @@
 
 export interface Bill {
     provider: string;
-    value: number;
+    amount: number;
     dateIn: string;
     numberBill: string;
     creditDays: number;

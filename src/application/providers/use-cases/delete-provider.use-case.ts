@@ -1,4 +1,4 @@
-import { ProviderRepository } from "../../../domain/providers/provider.repository";
+import { ProviderRepository } from "../../../domain/providers/repository/provider.repository";
 
 
 export class DeleteProvider {
