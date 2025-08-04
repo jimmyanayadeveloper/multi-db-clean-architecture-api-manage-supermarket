@@ -11,6 +11,8 @@ import { LoginUser } from "../application/user/use-cases/login-user.use-case";
 import { RegisterUser } from "../application/user/use-cases/register-user.use-case";
 import { ShowAllProvider } from "../application/providers/use-cases/get-all-provider.use-case";
 import { ProviderByTerm } from "../application/providers/use-cases/get-provider-term.use-case";
+import { UpdateProvider } from "../application/providers/use-cases/update-provider.use-case";
+import { DeleteProvider } from "../application/providers/use-cases/delete-provider.use-case";
 
 
 export function initDependencies() {
@@ -31,13 +33,15 @@ export function initDependencies() {
     const createProviderUseCase = new CreateProvider(providerRepository);
     const findByTermUseCase = new ProviderByTerm(providerRepository);
     const showAllProvidersUseCase = new ShowAllProvider(providerRepository);
+    const updateProviderById = new UpdateProvider(providerRepository);
+    const deleteProviderById = new DeleteProvider(providerRepository);
 
 
     /* Controller with use cases */
     /* Authentication */
     const authController = new AuthController({ registerUserUseCase, loginUserUseCase });
     /* Providers */
-    const providerController = new ProviderController({ createProviderUseCase, showAllProvidersUseCase, findByTermUseCase });
+    const providerController = new ProviderController({ createProviderUseCase, showAllProvidersUseCase, findByTermUseCase, updateProviderById, deleteProviderById });
 
     return {
         authController,

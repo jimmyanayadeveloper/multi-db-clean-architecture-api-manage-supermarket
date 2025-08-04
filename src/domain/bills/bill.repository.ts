@@ -1,9 +1,9 @@
-import { Bill } from "./bill.entity";
+import { BillEntity } from "./bill.entity";
 
 export interface BillRepository {
-    addAllBill(bill: Bill): Bill;
+    addAllBill(bill: Partial<BillEntity>): Promise<BillEntity>;
     delete(numberBill: string): boolean;
-    findByNumber(numberBill: string): Bill | null;
-    getAllBill(): Bill[];
-    update(numberBill: string, update: Partial<Bill>): Bill | null;
+    findByNumber(numberBill: string): Promise<BillEntity> | null;
+    getAllBill(): Promise<BillEntity>;
+    update(numberBill: string, update: Partial<BillEntity>): Promise<BillEntity> | null;
 }

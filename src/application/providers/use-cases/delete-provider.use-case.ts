@@ -3,7 +3,7 @@ import { ProviderRepository } from "../../../domain/providers/repository/provide
 
 export class DeleteProvider {
     constructor(private repository: ProviderRepository) { }
-    execute(term: string) {
-        this.repository.delete(term);
+    async execute(id: string) {
+        return this.repository.inactivate(id);
     }
 }

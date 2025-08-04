@@ -6,7 +6,7 @@ import { MongoDatabase } from "./infrastructure/database/mongo/mongo-database";
 import "reflect-metadata"
 import { PostgresDatabase } from "./infrastructure/database/postgreSQL/postgres-database";
 import { initDependencies } from './config/dependencies';
-import { Provider } from './infrastructure/database/postgreSQL/entities/provider.entities';
+import { ProviderDts } from './infrastructure/database/postgreSQL/entities/provider.entities';
 
 
 (async () => {
@@ -23,7 +23,7 @@ async function main() {
     await PostgresDatabase.connect({
         postgresUrl: "postgres://postgres:123456@localhost:5432/Purchasing-department",
         dbName: envs.POSTGRES_DB_NAME,
-        entities: [Provider, Bill]
+        entities: [ProviderDts, Bill]
     })
 
     const dependencies = initDependencies();

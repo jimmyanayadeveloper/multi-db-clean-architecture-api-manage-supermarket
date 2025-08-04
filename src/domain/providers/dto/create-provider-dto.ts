@@ -6,7 +6,7 @@ export class CreateProviderDto {
     public nit: string;
     public salesman: string;
     public creditBalance: number;
-    public withholdingsTaxes: boolean;
+    public withHoldingsTaxes: boolean;
     public saleWithCredit: boolean;
 
     constructor({
@@ -14,14 +14,14 @@ export class CreateProviderDto {
         nit,
         salesman,
         creditBalance = 0,
-        withholdingsTaxes = false,
+        withHoldingsTaxes = false,
         saleWithCredit = false,
     }: ProviderPartial) {
         this.name = name;
         this.nit = nit;
         this.salesman = salesman;
         this.creditBalance = creditBalance;
-        this.withholdingsTaxes = withholdingsTaxes;
+        this.withHoldingsTaxes = withHoldingsTaxes;
         this.saleWithCredit = saleWithCredit;
     }
 
@@ -36,11 +36,11 @@ export class CreateProviderDto {
         if (!salesman) return ['Missing salesman'];
 
         const creditBalance = Number(object.creditBalance ?? 0);
-        const withholdingsTaxes = Boolean(object.withholdingsTaxes ?? false);
+        const withHoldingsTaxes = Boolean(object.withHoldingsTaxes ?? false);
         const saleWithCredit = Boolean(object.saleWithCredit ?? false);
 
         const provider = new CreateProviderDto({
-            name, nit, salesman, creditBalance, withholdingsTaxes, saleWithCredit
+            name, nit, salesman, creditBalance, withHoldingsTaxes, saleWithCredit
         })
 
         return [undefined, provider]

@@ -6,14 +6,20 @@ export class ProviderRepositoryImpl implements ProviderRepository {
     create(provider: CreateProviderDto): Promise<ProviderEntity> {
         return this.datasource.create(provider)
     }
-    edit(term: string, update: UpdateProviderDto): ProviderEntity | null {
-        throw new Error("Method not implemented.");
+    edit(id: string, update: UpdateProviderDto): Promise<ProviderEntity | null> {
+        return this.datasource.edit(id, update);
     }
-    delete(term: string): boolean {
-        throw new Error("Method not implemented.");
+    findById(id: string): Promise<ProviderEntity | null> {
+        return this.datasource.findById(id)
+    }
+    findByNit(term: string): Promise<ProviderEntity | null> {
+        return this.datasource.findByNit(term);
     }
     findByTerm(term: string): Promise<ProviderEntity[]> {
         return this.datasource.findByTerm(term);
+    }
+    inactivate(id: string): Promise<boolean> {
+        return this.datasource.inactivate(id);
     }
     showAll(): Promise<ProviderEntity[]> {
         return this.datasource.showAll()

@@ -1,7 +1,7 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({ name: 'providers' })
-export class Provider {
+export class ProviderDts {
     @PrimaryGeneratedColumn('uuid')
     id!: string;
 
@@ -20,7 +20,10 @@ export class Provider {
     @Column()
     withHoldingsTaxes: boolean = false;
 
-    @Column()
-    saleWithCredit: boolean = false;
+    @Column({ default: 0 })
+    creditDays!: number;
+
+    @Column({ default: true })
+    isActive!: boolean;
 
 }

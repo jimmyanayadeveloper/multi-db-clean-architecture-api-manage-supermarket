@@ -1,5 +1,6 @@
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import { Provider } from "./provider.entities";
+import { ProviderDts } from "./provider.entities";
+
 
 @Entity({ name: 'bills' })
 export class Bill {
@@ -12,13 +13,17 @@ export class Bill {
     @Column('decimal', { precision: 10, scale: 2 })
     amountBill!: number;
 
-    @Column({ type: 'date' })
+    @Column({ type: 'date', nullable: true })
     dateBill!: Date;
 
-    @ManyToOne(() => Provider)
+    @ManyToOne(() => ProviderDts)
     @JoinColumn({ name: 'providerId' })
-    provider!: Provider;
+    provider!: ProviderDts;
 
     @Column()
     providerId!: string;
+
+    @Column({ default: false })
+    isPaod!: boolean;
+
 }

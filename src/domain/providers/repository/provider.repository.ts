@@ -5,8 +5,10 @@ import { ProviderEntity } from "../entities/provider.entity";
 
 export interface ProviderRepository {
     create(provider: CreateProviderDto): Promise<ProviderEntity>;
-    edit(term: string, update: UpdateProviderDto): ProviderEntity | null;
-    delete(term: string): boolean
-    findByTerm(term: string): Promise<ProviderEntity[]>;
+    edit(term: string, update: UpdateProviderDto): Promise<ProviderEntity | null>;
+    findById(term: string): Promise<ProviderEntity | null>;
+    findByNit(term: string): Promise<ProviderEntity | null>;
+    findByTerm(term: string): Promise<ProviderEntity[]>
+    inactivate(id: string): Promise<boolean>;
     showAll(): Promise<ProviderEntity[]>;
 }

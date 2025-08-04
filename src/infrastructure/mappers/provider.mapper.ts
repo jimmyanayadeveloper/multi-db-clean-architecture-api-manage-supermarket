@@ -1,19 +1,22 @@
 import { ProviderEntity } from "../../domain/providers";
-import { Provider } from "../database/postgreSQL/entities/provider.entities";
+import { ProviderDts } from "../database/postgreSQL/entities/provider.entities";
 
 export class ProviderMapper {
-    static toEntity(provider: Provider): ProviderEntity {
+    static toEntity(provider: ProviderDts): ProviderEntity {
         return new ProviderEntity(
+            provider.id,
             provider.name,
             provider.nit,
             provider.salesman,
             provider.creditBalance,
             provider.withHoldingsTaxes,
-            provider.saleWithCredit
+            provider.creditDays,
+            provider.isActive,
         );
     }
 
-    static toEntities(providers: Provider[]): ProviderEntity[] {
+    static toEntities(providers: ProviderDts[]): ProviderEntity[] {
         return providers.map(this.toEntity);
     }
+
 }

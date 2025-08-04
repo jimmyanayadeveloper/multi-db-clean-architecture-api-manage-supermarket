@@ -8,13 +8,14 @@ import { CreateProviderDto } from "../../domain/providers";
 import { CustomError } from "../../domain";
 import { rmSync } from "fs";
 /* import { InMemoriaProviderRepository } from "../../infrastructure/database/provider.repository.memory"; */
-
 /* const repository = new InMemoriaProviderRepository(); */
 
 interface ProviderControllerDeps {
     createProviderUseCase: CreateProvider;
     showAllProvidersUseCase: ShowAllProvider;
-    findByTermUseCase: ProviderByTerm
+    findByTermUseCase: ProviderByTerm,
+    updateProviderById: UpdateProvider,
+    deleteProviderById: DeleteProvider
 }
 
 export class ProviderController {
@@ -28,15 +29,6 @@ export class ProviderController {
         console.log(error); // Winston
         return res.status(500).json({ error: 'Internal Server Error' });
     }
-
-    /* private getAll = new GetAllProvider(repository);
-    private create = new CreateProvider(repository);
-    private update = new UpdateProvider(repository);
-    private remove = new DeleteProvider(repository);
-    private findByTem = new ProviderByTerm(repository); */
-
-    /*  
-     } */
 
     public createNewProvider = (req: Request, res: Response): void => {
         const [error, provider] = CreateProviderDto.create(req.body);
@@ -55,21 +47,23 @@ export class ProviderController {
     }
 
     public getBillByTerm = (req: Request, res: Response): void => {
-        console.log(req.params.term)
         this.providerDependencies.findByTermUseCase
             .execute(req.params.term)
             .then(data => res.json(data))
             .catch(error => this.handleError(error, res))
     }
 
-    /* public updatedProviderByTerm = (req: Request, res: Response): void => {
-        const providerUpdate = this.update.execute(req.params.term, req.body);
-        res.json(providerUpdate);
-    } */
+    public updatedProviderById = (req: Request, res: Response): void => {
+        this.providerDependencies.updateProviderById
+            .execute(req.params.id, req.body)
+            .then(data => res.json(data))
+            .catch(error => this.handleError(error, res))
+    }
 
-    /* public deleteProviderByTerm = (req: Request, res: Response): void => {
-        this.remove.execute(req.params.term);
-        res.json("Proveedor eliminado")
-    } */
-
+    public deleteProviderById = (req: Request, res: Response): void => {
+        this.providerDependencies.deleteProviderById
+            .execute(req.params.id)
+            .then(data => res.json(data))
+            .catch(error => this.handleError(error, res))
+    }
 }
