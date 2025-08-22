@@ -4,5 +4,5 @@ export interface ProviderPartial {
     salesman: string;
     creditBalance?: number;
     withHoldingsTaxes?: boolean;
-    saleWithCredit?: boolean;
+    saleWithCredit?: number;
 }

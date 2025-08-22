@@ -1,5 +1,5 @@
-import { Bill } from "../../domain/bills/bill.entity";
-import { BillRepository } from "../../domain/bills/bill.repository";
+/* import { Bill } from "../../domain/bills/entities/bill.entity";
+import { BillRepository } from "../../domain/bills/repository/bill.repository";
 
 const bills: Bill[] = [
     {
@@ -63,4 +63,4 @@ export class InMemoriaBillRepository implements BillRepository {
         return true;
     }
 
-}
+} */

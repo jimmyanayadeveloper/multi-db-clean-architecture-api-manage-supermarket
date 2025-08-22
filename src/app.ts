@@ -1,4 +1,4 @@
-import { Bill } from './infrastructure/database/postgreSQL/entities/bill.entities';
+import { BillDts } from './infrastructure/database/postgreSQL/entities/bill.entities';
 import { Server } from "./presentation/server";
 import { envs } from "./config/envs";
 import { AppRoutes } from "./presentation/routes";
@@ -23,7 +23,7 @@ async function main() {
     await PostgresDatabase.connect({
         postgresUrl: "postgres://postgres:123456@localhost:5432/Purchasing-department",
         dbName: envs.POSTGRES_DB_NAME,
-        entities: [ProviderDts, Bill]
+        entities: [ProviderDts, BillDts]
     })
 
     const dependencies = initDependencies();

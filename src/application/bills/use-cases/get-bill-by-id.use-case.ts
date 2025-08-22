@@ -1,11 +1,11 @@
-import { BillRepository } from "../../../domain/bills/bill.repository";
+import { BillRepository } from "../../../domain/bills/repository/bill.repository";
 
 
 export class GetBillByNumberID {
     constructor(private repository: BillRepository) { }
 
-    execute(numberBillId: string) {
-        return this.repository.findByNumber(numberBillId);
+    async execute(numberBillId: string) {
+        return await this.repository.findByNumber(numberBillId);
     }
 
 }

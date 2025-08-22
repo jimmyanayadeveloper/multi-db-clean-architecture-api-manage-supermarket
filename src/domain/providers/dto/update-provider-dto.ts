@@ -11,7 +11,7 @@ export class UpdateProviderDto {
     public salesman?: string;
     public creditBalance?: number;
     public withHoldingsTaxes?: boolean;
-    public saleWithCredit?: boolean;
+    public saleWithCredit?: number;
 
     constructor({
         name,
@@ -41,7 +41,7 @@ export class UpdateProviderDto {
             salesman: object.salesman ?? providerChange.salesman,
             creditBalance: object.creditBalance ?? providerChange.creditBalance,
             withHoldingsTaxes: object.withHoldingsTaxes ?? providerChange.withHoldingsTaxes ?? false,
-            saleWithCredit: object.saleWithCredit ?? providerChange.saleWithCredit ?? false
+            saleWithCredit: object.saleWithCredit ?? providerChange.creditDays ?? false
         }
 
         const provider = new UpdateProviderDto(updatedProvider)

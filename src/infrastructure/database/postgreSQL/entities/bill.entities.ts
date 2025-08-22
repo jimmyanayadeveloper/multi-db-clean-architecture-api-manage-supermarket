@@ -3,7 +3,7 @@ import { ProviderDts } from "./provider.entities";
 
 
 @Entity({ name: 'bills' })
-export class Bill {
+export class BillDts {
     @PrimaryGeneratedColumn('uuid')
     id!: string;
 
@@ -16,6 +16,9 @@ export class Bill {
     @Column({ type: 'date', nullable: true })
     dateBill!: Date;
 
+    @Column({ type: 'date', nullable: true })
+    payBillDate!: Date;
+
     @ManyToOne(() => ProviderDts)
     @JoinColumn({ name: 'providerId' })
     provider!: ProviderDts;
@@ -24,6 +27,6 @@ export class Bill {
     providerId!: string;
 
     @Column({ default: false })
-    isPaod!: boolean;
+    isPaid!: boolean;
 
 }

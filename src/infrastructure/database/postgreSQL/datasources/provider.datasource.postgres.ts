@@ -1,4 +1,3 @@
-import { CustomError } from "../../../../domain";
 import { CreateProviderDto, ProviderDatasource, ProviderEntity, UpdateProviderDto } from "../../../../domain/providers";
 import { ProviderMapper } from "../../../mappers/provider.mapper";
 import { ProviderDts } from "../entities/provider.entities";

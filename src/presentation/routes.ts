@@ -6,7 +6,7 @@ import { AuthRoutes } from "./auth/routes";
 export class AppRoutes {
     static routes(dependencies: any): Router {
         const router = Router();
-        router.use('/api/bills', BillsRoutes.routes);
+        router.use('/api/bills', BillsRoutes.routes(dependencies));
         router.use('/api/providers', ProvidersRoutes.routes(dependencies));
         router.use('/api/auth', AuthRoutes.routes(dependencies));
         return router

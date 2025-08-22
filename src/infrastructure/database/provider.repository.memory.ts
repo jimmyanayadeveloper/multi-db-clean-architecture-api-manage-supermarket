@@ -1,4 +1,4 @@
-
+/* 
 import { ProviderEntity } from "../../domain/providers";
 import { ProviderRepository } from "../../domain/providers/repository/provider.repository";
 
@@ -113,4 +113,4 @@ export const fakeProviders: ProviderEntity[] = [
         Object.assign(provider, update);
         return provider;
     }
-} */
+} */ 

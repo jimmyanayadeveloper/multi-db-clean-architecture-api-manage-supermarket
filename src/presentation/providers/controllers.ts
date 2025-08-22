@@ -6,7 +6,7 @@ import { ProviderByTerm } from "../../application/providers/use-cases/get-provid
 import { UpdateProvider } from "../../application/providers/use-cases/update-provider.use-case";
 import { CreateProviderDto } from "../../domain/providers";
 import { CustomError } from "../../domain";
-import { rmSync } from "fs";
+
 /* import { InMemoriaProviderRepository } from "../../infrastructure/database/provider.repository.memory"; */
 /* const repository = new InMemoriaProviderRepository(); */
 
