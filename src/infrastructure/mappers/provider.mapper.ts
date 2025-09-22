@@ -1,5 +1,5 @@
 import { ProviderEntity } from "../../domain/providers";
-import { ProviderDts } from "../database/postgreSQL/entities/provider.entities";
+import { ProviderDts } from "../datasources/postgreSQL/entities/provider.entities";
 
 export class ProviderMapper {
     static toEntity(provider: ProviderDts): ProviderEntity {

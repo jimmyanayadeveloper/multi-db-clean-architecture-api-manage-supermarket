@@ -7,9 +7,6 @@ import { UpdateProvider } from "../../application/providers/use-cases/update-pro
 import { CreateProviderDto } from "../../domain/providers";
 import { CustomError } from "../../domain";
 
-/* import { InMemoriaProviderRepository } from "../../infrastructure/database/provider.repository.memory"; */
-/* const repository = new InMemoriaProviderRepository(); */
-
 interface ProviderControllerDeps {
     createProviderUseCase: CreateProvider;
     showAllProvidersUseCase: ShowAllProvider;

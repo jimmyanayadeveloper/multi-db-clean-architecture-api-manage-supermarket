@@ -2,6 +2,7 @@ import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "t
 import { ProviderDts } from "./provider.entities";
 
 
+
 @Entity({ name: 'bills' })
 export class BillDts {
     @PrimaryGeneratedColumn('uuid')

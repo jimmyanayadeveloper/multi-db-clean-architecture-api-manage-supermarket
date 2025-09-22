@@ -1,9 +1,5 @@
-import { ProviderEntity } from "../domain/providers";
-import { ProviderPartial } from "../domain/providers/interfaces/provider-partial.interface";
 
 export class Validators {
-
-
     static get email() {
         return /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
     }
@@ -28,5 +24,4 @@ export class Validators {
             diff
         }
     }
-
 }

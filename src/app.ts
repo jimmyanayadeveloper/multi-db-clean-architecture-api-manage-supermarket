@@ -1,12 +1,13 @@
-import { BillDts } from './infrastructure/database/postgreSQL/entities/bill.entities';
+
 import { Server } from "./presentation/server";
 import { envs } from "./config/envs";
 import { AppRoutes } from "./presentation/routes";
-import { MongoDatabase } from "./infrastructure/database/mongo/mongo-database";
+import { MongoDatabase } from "./infrastructure/datasources/mongo/mongo-database";
 import "reflect-metadata"
-import { PostgresDatabase } from "./infrastructure/database/postgreSQL/postgres-database";
+import { PostgresDatabase } from "./infrastructure/datasources/postgreSQL/postgres-database";
 import { initDependencies } from './config/dependencies';
-import { ProviderDts } from './infrastructure/database/postgreSQL/entities/provider.entities';
+import { ProviderDts } from './infrastructure/datasources/postgreSQL/entities/provider.entities';
+import { BillDts } from "./infrastructure/datasources/postgreSQL/entities/bill.entities";
 
 
 (async () => {

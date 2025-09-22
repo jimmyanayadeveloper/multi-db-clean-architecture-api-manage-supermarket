@@ -1,8 +1,9 @@
 import { BillRepository } from "../../../domain/bills/repository/bill.repository";
+import { Pagination } from "../../../domain/common/pagination";
 
 export class GetAllBills {
     constructor(private repository: BillRepository) { }
-    execute() {
-        return this.repository.showAllBill();
+    async execute(pagination: Pagination) {
+        return await this.repository.showAllBill(pagination);
     }
 }

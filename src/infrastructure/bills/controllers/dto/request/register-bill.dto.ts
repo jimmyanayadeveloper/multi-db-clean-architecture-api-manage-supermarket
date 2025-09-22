@@ -1,0 +1,29 @@
+import { ProviderMin, RegisterBillData, RegisterBillRequest } from "../../../../../domain/bills/interfaces/dto/request/register.dto";
+import { DtoResult } from "../../../../../domain/bills/interfaces/response-dto";
+import { validationRegisterBill } from "../validation/validation-register-bill-dto";
+
+export class RegisterBillDto implements RegisterBillData {
+    provider: ProviderMin
+    numberBill: string;
+    amountBill: number;
+    dateIn: Date;
+    payDate: Date;
+    isPaid: boolean;
+    creditDays: number
+
+    private constructor(dataBill: RegisterBillDto) {
+        this.provider = { name: dataBill.provider.name, id: dataBill.provider.id }
+        this.numberBill = dataBill.numberBill;
+        this.amountBill = dataBill.amountBill;
+        this.dateIn = dataBill.dateIn;
+        this.payDate = dataBill.payDate;
+        this.isPaid = dataBill.isPaid
+        this.creditDays = dataBill.creditDays
+    }
+
+    static createRegisterBillDto(object: RegisterBillRequest): DtoResult<RegisterBillDto> {
+        const validationResult = validationRegisterBill(object);
+        if (!validationResult.ok) return validationResult;
+        return { ok: true, value: new RegisterBillDto(validationResult.value) }
+    }
+}

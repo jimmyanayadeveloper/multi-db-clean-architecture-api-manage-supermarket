@@ -1,6 +1,6 @@
 import { NextFunction, Request, RequestHandler, Response } from "express";
 import { JwtAdapter } from "../../../config";
-import { UserMongoseModel } from "../../../infrastructure/database/mongo/models/user.model";
+import { UserMongoseModel } from "../../../infrastructure/datasources/mongo/models/user.model";
 
 export class AuthMiddleware {
     static validateJWT: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
