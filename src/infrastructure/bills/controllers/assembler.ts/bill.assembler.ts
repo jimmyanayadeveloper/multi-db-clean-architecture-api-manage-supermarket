@@ -1,5 +1,5 @@
-import { BillEntity } from "../../../domain/bills/entities/bill.entity";
-import { RegisterBillDto } from "../../../infrastructure/bills/controllers/dto/request/register-bill.dto";
+import { BillEntity } from "../../../../domain/bills/entities/bill.entity";
+import { RegisterBillDto } from "../../../../application/bills/dto/assemblers/register-bill.dto";
 
 export class BillAssembler {
     static fromDtoToEntity(dto: RegisterBillDto, id: string = ''): BillEntity {

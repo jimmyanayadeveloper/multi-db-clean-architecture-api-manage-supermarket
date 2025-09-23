@@ -1,8 +1,8 @@
-import { CustomError } from "../../../../../domain";
-import { BillEntity } from "../../../../../domain/bills/entities/bill.entity";
-import { RegisterBillData } from '../../../../../domain/bills/interfaces/dto/request/register.dto';
-import { UpdateBillData } from "../../../../../domain/bills/interfaces/dto/request/update.dto";
-import { DtoResult } from "../../../../../domain/bills/interfaces/response-dto";
+import { CustomError } from "../../../../domain";
+import { BillEntity } from "../../../../domain/bills/entities/bill.entity";
+import { RegisterBillData } from '../../interfaces/dto/request/register.dto';
+import { UpdateBillData } from "../../interfaces/dto/request/update.dto";
+import { DtoResult } from "../../interfaces/response-dto";
 
 export class UpdateBillDto {
 

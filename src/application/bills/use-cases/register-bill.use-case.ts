@@ -1,8 +1,8 @@
 import { CustomError } from "../../../domain";
 import { BillEntity } from "../../../domain/bills/entities/bill.entity";
 import { BillRepository } from "../../../domain/bills/repository/bill.repository";
-import { RegisterBillDto } from "../../../infrastructure/bills/controllers/dto/request/register-bill.dto";
-import { BillAssembler } from "../assembler.ts/bill.assembler";
+import { RegisterBillDto } from "../dto/assemblers/register-bill.dto";
+import { BillAssembler } from "../../../infrastructure/bills/controllers/assembler.ts/bill.assembler";
 
 export class RegisterBill {
     constructor(private readonly repository: BillRepository) { }

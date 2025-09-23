@@ -1,6 +1,6 @@
 import { BillDatasource } from "../../../domain/bills/datasource/bill.datasource";
 import { BillEntity } from "../../../domain/bills/entities/bill.entity";
-import { BillsSummariesByPaidStatus, BillResponseWithSummaryPaginated } from "../../../domain/bills/interfaces/dto/response/response.dto";
+import { BillsSummariesByPaidStatus } from "../../../domain/bills/interface/bill-summaries";
 import { BillRepository } from "../../../domain/bills/repository/bill.repository";
 import { Pagination } from "../../../domain/common/pagination";
 
@@ -9,10 +9,6 @@ export class BillsRepositoryImpl implements BillRepository {
     constructor(private readonly datasource: BillDatasource) { }
     getSummaryBillsSlipByPaidStatus(providerId?: string): Promise<BillsSummariesByPaidStatus> {
         return this.datasource.getSummarySlipByPaidStatus(providerId);
-    }
-
-    showStandarInfoBillsDashboard(pagination?: Pagination): Promise<BillResponseWithSummaryPaginated> {
-        throw new Error("Method not implemented.");
     }
 
     edit(id: string, changes: Partial<BillEntity>): Promise<BillEntity | null> {

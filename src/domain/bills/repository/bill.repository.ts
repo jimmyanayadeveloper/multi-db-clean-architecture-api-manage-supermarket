@@ -1,7 +1,7 @@
 import { Pagination } from "../../common/pagination";
 import { BillEntity } from "../entities/bill.entity";
-import { UpdateBillData } from "../interfaces/dto/request/update.dto";
-import { BillResponseWithSummaryPaginated, BillsSummariesByPaidStatus } from "../interfaces/dto/response/response.dto";
+import { UpdateBillData } from "../../../application/bills/interfaces/dto/request/update.dto";
+import { BillsSummariesByPaidStatus } from "../interface/bill-summaries";
 
 export interface BillRepository {
     edit(id: string, changes: UpdateBillData): Promise<BillEntity | null>;
@@ -13,5 +13,4 @@ export interface BillRepository {
     register(newBill: BillEntity): Promise<BillEntity | null>;
     showAllBill(pagination: Pagination): Promise<[BillEntity[], number]>;
     showAllBillByStatus(status: boolean): Promise<BillEntity[]>;
-    showStandarInfoBillsDashboard(pagination?: Pagination): Promise<BillResponseWithSummaryPaginated>;
 }

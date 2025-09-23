@@ -1,9 +1,9 @@
-import { CustomError } from "../../../../../domain";
-import { DtoResult } from "../../../../../domain/bills/interfaces/response-dto";
-import { addUtcDays, dateWithTime } from "../../../../../application/utils/dates-utc";
+import { CustomError } from "../../../../domain";
+import { DtoResult } from "../../interfaces/response-dto";
+import { addUtcDays, dateWithTime } from "../../../utils/dates-utc";
 
-import { RegisterBillDto } from "../request/register-bill.dto";
-import { RegisterBillRequest } from "../../../../../domain/bills/interfaces/dto/request/register.dto";
+import { RegisterBillDto } from "../assemblers/register-bill.dto";
+import { RegisterBillRequest } from "../../interfaces/dto/request/register.dto";
 
 export function validationRegisterBill(objectIn: RegisterBillRequest): DtoResult<RegisterBillDto> {
 

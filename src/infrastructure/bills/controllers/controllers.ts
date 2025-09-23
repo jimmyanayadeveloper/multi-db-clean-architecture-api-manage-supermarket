@@ -12,11 +12,12 @@ import { PaidBill } from "../../../application/bills/use-cases/paid-bill.use-cas
 import { RegisterBill } from "../../../application/bills/use-cases/register-bill.use-case";
 import { UpdateBill } from "../../../application/bills/use-cases/update-bill.use-case";
 
-import { BillResponseAssembler } from './dto/response/assembler-bill-response';
-import { FindBillByIdDto } from "./dto/request/get-by-id.dto";
+
+import { FindBillByIdDto } from "../../../application/bills/dto/assemblers/get-by-id.dto";
 import { parsePagination } from "../../shared/parsers/pagination.parser";
-import { RegisterBillDto } from "./dto/request/register-bill.dto";
-import { UpdateBillDto } from "./dto/request/update-bill.dto";
+import { RegisterBillDto } from "../../../application/bills/dto/assemblers/register-bill.dto";
+import { UpdateBillDto } from "../../../application/bills/dto/assemblers/update-bill.dto";
+import { BillResponseAssembler } from "./assembler.ts/assembler-bill-response";
 
 
 interface BillControllerDeps {

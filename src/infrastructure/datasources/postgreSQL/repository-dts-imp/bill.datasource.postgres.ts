@@ -6,8 +6,7 @@ import { BillDts } from "../entities/bill.entities";
 import { BillAssembler } from "../../../bills/mappers/bill.assabler";
 import { BillMapper } from "../../../bills/mappers/bill.mapper";
 import { Pagination } from '../../../../domain/common/pagination';
-import { BillsSummariesByPaidStatus, BillsSummary } from "../../../../domain/bills/interfaces/dto/response/response.dto";
-import { BillPaidFilter } from "../../../../domain/bills/interfaces/request";
+import { BillsSummariesByPaidStatus, BillsSummary } from "../../../../domain/bills/interface/bill-summaries";
 
 export class BillDatasourceImp implements BillDatasource {
     private repo = PostgresDatabase.datasource.getRepository(BillDts)
@@ -114,24 +113,5 @@ export class BillDatasourceImp implements BillDatasource {
 
     async findById(id: string): Promise<BillEntity[] | null> {
         throw new Error("Method not implemented.");
-    }
-
-    async getSummary(filters?: { providerId?: string; isPaid?: BillPaidFilter }): Promise<BillsSummary> {
-        const queryBuilder = this.repo.createQueryBuilder("bill")
-            .select("COUNT(bill.id)", "countBills")
-            .addSelect("SUM(bill.amountBill)", "totalAmount");
-
-        if (filters?.providerId)
-            queryBuilder.andWhere("bill.providerId = :providerId", { providerId: filters?.providerId });
-
-        if (filters?.isPaid !== undefined)
-            queryBuilder.andWhere("bill.isPaid = :isPaid", { isPaid: filters.isPaid });
-
-        const data = await queryBuilder.getRawOne<{ countBills: string; totalAmount: string }>()
-
-        return {
-            countBills: Number(data?.countBills ?? 0),
-            totalAmount: Number(data?.totalAmount ?? 0)
-        }
     }
 }

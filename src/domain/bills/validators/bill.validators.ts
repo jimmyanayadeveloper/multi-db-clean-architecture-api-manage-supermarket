@@ -1,6 +1,6 @@
 
 import { CustomError } from "../../errors/custom.error";
-import { ProviderMin } from "../interfaces/dto/request/register.dto";
+import { ProviderMin } from "../../../application/bills/interfaces/dto/request/register.dto";
 
 export class BillValidators {
     static validateProvider(provider: ProviderMin) {

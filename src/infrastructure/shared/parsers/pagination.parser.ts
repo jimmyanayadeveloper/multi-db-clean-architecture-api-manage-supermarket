@@ -1,4 +1,4 @@
-import { DtoResult } from "../../../domain/bills/interfaces/response-dto";
+import { DtoResult } from "../../../application/bills/interfaces/response-dto";
 import { Pagination } from "../../../domain/common/pagination";
 
 export function parsePagination(query: any): Pagination {

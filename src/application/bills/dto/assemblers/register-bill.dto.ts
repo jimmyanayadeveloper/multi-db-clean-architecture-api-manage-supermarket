@@ -1,5 +1,5 @@
-import { ProviderMin, RegisterBillData, RegisterBillRequest } from "../../../../../domain/bills/interfaces/dto/request/register.dto";
-import { DtoResult } from "../../../../../domain/bills/interfaces/response-dto";
+import { ProviderMin, RegisterBillData, RegisterBillRequest } from "../../interfaces/dto/request/register.dto";
+import { DtoResult } from "../../interfaces/response-dto";
 import { validationRegisterBill } from "../validation/validation-register-bill-dto";
 
 export class RegisterBillDto implements RegisterBillData {

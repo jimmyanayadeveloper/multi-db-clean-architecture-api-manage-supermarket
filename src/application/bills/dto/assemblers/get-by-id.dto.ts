@@ -1,7 +1,7 @@
 import { v4 as uuidv4, validate as uuidValidate } from "uuid";
 
-import { CustomError } from '../../../../../domain';
-import { DtoResult } from '../../../../../domain/bills/interfaces/response-dto';
+import { CustomError } from '../../../../domain';
+import { DtoResult } from '../../interfaces/response-dto';
 
 export class FindBillByIdDto {
 

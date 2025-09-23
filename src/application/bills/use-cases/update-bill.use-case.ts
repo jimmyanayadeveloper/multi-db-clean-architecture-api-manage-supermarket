@@ -1,5 +1,5 @@
 import { BillEntity } from "../../../domain/bills/entities/bill.entity";
-import { RegisterBillData } from "../../../domain/bills/interfaces/dto/request/register.dto";
+import { RegisterBillData } from "../interfaces/dto/request/register.dto";
 import { BillRepository } from "../../../domain/bills/repository/bill.repository";
 
 export class UpdateBill {

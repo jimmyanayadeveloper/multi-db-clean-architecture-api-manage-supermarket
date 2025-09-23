@@ -1,4 +1,4 @@
-import { DtoResult } from "../../../domain/bills/interfaces/response-dto";
+import { DtoResult } from "../interfaces/response-dto";
 
 
 export class GetBillByNumberDto {

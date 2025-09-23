@@ -1,6 +1,5 @@
-
-import { BillEntity } from "../../../../../domain/bills/entities/bill.entity";
-import { BillMinResponse } from "../../../../../domain/bills/interfaces/dto/response/response.dto";
+import { BillMinResponse } from "../../../../application/bills/interfaces/dto/response/response.dto"
+import { BillEntity } from "../../../../domain/bills/entities/bill.entity"
 
 export class BillResponseAssembler {
     static toResponse(entity: BillEntity | null): BillMinResponse | null {

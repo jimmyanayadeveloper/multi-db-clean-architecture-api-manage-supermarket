@@ -1,6 +1,6 @@
 import { Pagination } from "../../common/pagination";
 import { BillEntity } from "../entities/bill.entity";
-import { BillsSummariesByPaidStatus } from "../interfaces/dto/response/response.dto";
+import { BillsSummariesByPaidStatus } from "../interface/bill-summaries";
 
 export interface BillDatasource {
     register(dataBill: BillEntity): Promise<BillEntity | null>;
