@@ -1,17 +1,16 @@
-
-import { CustomError } from "../../../domain";
-import { CreateProviderDto, CreateProviderUseCase, ProviderEntity, } from "../../../domain/providers";
+import { CreateProviderUseCase } from "../../../domain/providers/use-cases/create-provider.use-case";
+import { ProviderDomainService } from "../../../domain/providers/services/provider-domain.service";
+import { ProviderEntity, RegisterProviderDto, } from "../../../domain/providers";
 import { ProviderRepository } from "../../../domain/providers/repository/provider.repository";
 
+import { ProviderAssembler } from "../assemblers/provider.assebler";
 
 export class CreateProvider implements CreateProviderUseCase {
-
-    constructor(private readonly providerRepository: ProviderRepository) { }
-
-    async execute(dto: CreateProviderDto): Promise<ProviderEntity> {
-        const provider = await this.providerRepository.findByNit(dto.nit);
-        if (provider) throw CustomError.conflict('Provider already exists')
-        const providerCreate = await this.providerRepository.create(dto);
-        return providerCreate;
+    constructor(private readonly repository: ProviderRepository) { }
+    async execute(dto: RegisterProviderDto): Promise<ProviderEntity> {
+        await ProviderDomainService.uniqueNit(this.repository, dto.nit);
+        await ProviderDomainService.uniqueName(this.repository, dto.name);
+        const newProvider = ProviderAssembler.fromDtoToEntity(dto);
+        return await this.repository.create(newProvider);
     }
 }

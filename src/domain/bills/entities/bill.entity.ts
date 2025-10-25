@@ -1,14 +1,11 @@
-import { BillValidators } from "../validators/bill.validators";
 
-interface ProviderDataPartial {
-    id: string
-    name: string,
-}
+import { ProviderMin } from "../../providers/interfaces/provider-summaries";
+import { BillValidators } from "../validators/bill.validators";
 
 export class BillEntity {
     private constructor(
         public id: string,
-        public provider: ProviderDataPartial,
+        public provider: ProviderMin,
         public numberBill: string,
         public amountBill: number,
         public dateIn: Date,
@@ -18,7 +15,7 @@ export class BillEntity {
 
     static create(props: {
         id?: string,
-        provider: ProviderDataPartial,
+        provider: ProviderMin,
         numberBill: string,
         amountBill: number,
         dateIn: Date,
@@ -43,9 +40,9 @@ export class BillEntity {
     }
 
     static update(actual: BillEntity, changes: Partial<BillEntity>): BillEntity {
-        const updated = Object.assign({}, actual, changes);
+        const updated = { ...actual, ...changes };
         return BillEntity.create({
-            id: updated.id,
+            id: actual.id,
             provider: updated.provider,
             numberBill: updated.numberBill,
             amountBill: updated.amountBill,

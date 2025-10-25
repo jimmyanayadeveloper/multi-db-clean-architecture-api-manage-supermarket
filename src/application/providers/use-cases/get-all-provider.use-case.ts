@@ -5,6 +5,6 @@ import { ShowAllProviderUseCase } from "../../../domain/providers/use-cases/show
 export class ShowAllProvider implements ShowAllProviderUseCase {
     constructor(private repository: ProviderRepository) { }
     async execute(): Promise<ProviderEntity[]> {
-        return this.repository.showAll();;
+        return this.repository.showAll();
     }
 }

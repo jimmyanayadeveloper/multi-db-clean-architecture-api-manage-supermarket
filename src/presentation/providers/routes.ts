@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { ProviderController } from './controllers';
+import { ProviderController } from '../../infrastructure/provider/controllers/controllers';
 
 export class ProvidersRoutes {
     static routes({ providerController }: { providerController: ProviderController }): Router {
@@ -7,9 +7,12 @@ export class ProvidersRoutes {
         const router = Router();
         router.post('/create', providerController.createNewProvider);
         router.get('/show-all', providerController.getAllProviders);
-        router.get('/find-by/:term', providerController.getBillByTerm);
+        router.get('/find-by-id/:id', providerController.getProviderById);
+        router.get('/find-by-name/:name', providerController.getProviderByName);
+        router.get('/find-by-nit/:nit', providerController.getProviderByNit);
+        router.get('/find-by-term/:term', providerController.getProviderByTerm);
         router.put('/update/:id', providerController.updatedProviderById);
-        router.delete('/delete/:id', providerController.deleteProviderById);
+        router.delete('/inactivate/:id', providerController.deleteProviderById);
         return router;
     }
 }

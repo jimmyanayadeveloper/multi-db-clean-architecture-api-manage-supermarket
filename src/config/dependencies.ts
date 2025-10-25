@@ -1,5 +1,5 @@
-import { AuthController } from "../presentation/auth/controllers";
-import { ProviderController } from "../presentation/providers/controllers";
+import { AuthController } from "../infrastructure/user/controllers/controllers";
+import { ProviderController } from "../infrastructure/provider/controllers/controllers";
 
 import { CreateProvider } from "../application/providers/use-cases/add-provider.use-case";
 import { DeleteProvider } from "../application/providers/use-cases/delete-provider.use-case";
@@ -18,13 +18,16 @@ import { UpdateBill } from "../application/bills/use-cases/update-bill.use-case"
 import { UpdateProvider } from "../application/providers/use-cases/update-provider.use-case";
 
 import { AuthenticationDatasourceImpl } from "../infrastructure/datasources/mongo/datasources/authentication.datasource.mongo";
-import { AuthenticationRepositoryImpl } from "../infrastructure/repository/user/authentication.repository.impl";
+
 import { BillDatasourceImp } from "../infrastructure/datasources/postgreSQL/repository-dts-imp/bill.datasource.postgres";
 import { BillsController } from "../infrastructure/bills/controllers/controllers";
 import { BillsRepositoryImpl } from "../infrastructure/bills/repository/bills.repository.imp";
 import { ProviderDatasourceImp } from "../infrastructure/datasources/postgreSQL/repository-dts-imp/provider.datasource.postgres";
-import { ProviderRepositoryImpl } from "../infrastructure/repository/provider/provider.repository.imp";
-
+import { ProviderRepositoryImpl } from "../infrastructure/provider/repository/provider.repository.imp";
+import { AuthenticationRepositoryImpl } from "../infrastructure/user/repository/authentication.repository.impl";
+import { GetProviderById } from '../application/providers/use-cases/get-provider-by-id.use-case';
+import { GetProviderByName } from "../application/providers/use-cases/get-provider-by-name.use-case";
+import { GetProviderByNit } from "../application/providers/use-cases/get-provider-by-nit.use-case";
 
 export function initDependencies() {
     /* Datasource */
@@ -52,10 +55,13 @@ export function initDependencies() {
     const updateBill = new UpdateBill(billRepository);
     /* Providers */
     const createProviderUseCase = new CreateProvider(providerRepository);
-    const deleteProviderById = new DeleteProvider(providerRepository);
-    const findByTermUseCase = new ProviderByTerm(providerRepository);
+    const deleteProviderByIdUseCase = new DeleteProvider(providerRepository);
+    const findProviderByIdUseCase = new GetProviderById(providerRepository);
+    const findProviderByNameUseCase = new GetProviderByName(providerRepository);
+    const findProviderByNitUseCase = new GetProviderByNit(providerRepository);
+    const findProviderByTermUseCase = new ProviderByTerm(providerRepository);
     const showAllProvidersUseCase = new ShowAllProvider(providerRepository);
-    const updateProviderById = new UpdateProvider(providerRepository);
+    const updateProviderByIdUseCase = new UpdateProvider(providerRepository);
 
     /* Controller with use cases */
     /* Authentication */
@@ -63,7 +69,7 @@ export function initDependencies() {
     /* Bills */
     const billController = new BillsController({ registerNewBillUseCase, getBillByNumberBillUseCase, getBillsByProvider, getBillsByStatus, paidBill, showAllBills, updateBill, getSummariesSlipByPaidStatus });
     /* Providers */
-    const providerController = new ProviderController({ createProviderUseCase, showAllProvidersUseCase, findByTermUseCase, updateProviderById, deleteProviderById });
+    const providerController = new ProviderController({ createProviderUseCase, showAllProvidersUseCase, findProviderByIdUseCase, findProviderByNameUseCase, findProviderByNitUseCase, findProviderByTermUseCase, updateProviderByIdUseCase, deleteProviderByIdUseCase });
 
     return {
         authController,

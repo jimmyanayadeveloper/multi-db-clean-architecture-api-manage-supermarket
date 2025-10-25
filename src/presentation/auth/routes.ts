@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { AuthMiddleware } from "./middlewares/auth.middlewares";
-import { AuthController } from "./controllers";
+import { AuthController } from "../../infrastructure/user/controllers/controllers";
 
 export class AuthRoutes {
     static routes({ authController }: { authController: AuthController }): Router {

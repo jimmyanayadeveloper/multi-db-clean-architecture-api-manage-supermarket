@@ -1,6 +1,6 @@
 
 import { CustomError } from "../../errors/custom.error";
-import { ProviderMin } from "../../../application/bills/interfaces/dto/request/register.dto";
+import { ProviderMin } from "../../providers/interfaces/provider-summaries";
 
 export class BillValidators {
     static validateProvider(provider: ProviderMin) {
@@ -18,4 +18,6 @@ export class BillValidators {
         if (!(datePaid instanceof Date) || isNaN(datePaid.getTime())) throw CustomError.badRequest("datePaid must be a valid date");
         if (datePaid.getTime() < dateIn.getTime()) throw CustomError.badRequest('datePaid must be >= dateIn');
     }
+
+
 }

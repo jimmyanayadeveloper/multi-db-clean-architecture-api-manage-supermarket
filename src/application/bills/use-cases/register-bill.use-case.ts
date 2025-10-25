@@ -1,14 +1,13 @@
-import { CustomError } from "../../../domain";
+import { BillDomainService } from "../../../domain/bills/services/bill-domain.service";
 import { BillEntity } from "../../../domain/bills/entities/bill.entity";
 import { BillRepository } from "../../../domain/bills/repository/bill.repository";
-import { RegisterBillDto } from "../dto/assemblers/register-bill.dto";
-import { BillAssembler } from "../../../infrastructure/bills/controllers/assembler.ts/bill.assembler";
+import { RegisterBillDto } from "../dto/register-bill.dto";
+import { BillAssembler } from "../assemblers/bill.assembler";
 
 export class RegisterBill {
     constructor(private readonly repository: BillRepository) { }
     async execute(dto: RegisterBillDto): Promise<BillEntity | null> {
-        const billFound = await this.repository.findByNumberBillAndProvider(dto.numberBill, dto.provider.id);
-        if (billFound) throw CustomError.conflict('Bill already exists in this provider');
+        await BillDomainService.uniqueIdBill(this.repository, dto.numberBill, dto.provider.id);
         const newBill = BillAssembler.fromDtoToEntity(dto);
         return await this.repository.register(newBill);
     }

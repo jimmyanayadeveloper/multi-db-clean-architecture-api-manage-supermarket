@@ -1,6 +1,7 @@
-import { CreateProviderDto } from "../dto/create-provider-dto";
+
+import { RegisterProviderDto } from "../../../application/providers/dto/create-provider-dto";
 import { ProviderEntity } from "../entities/provider.entity";
 
 export interface CreateProviderUseCase {
-    execute(dto: CreateProviderDto): Promise<ProviderEntity>
+    execute(dto: RegisterProviderDto): Promise<ProviderEntity>
 }

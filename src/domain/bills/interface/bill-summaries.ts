@@ -8,3 +8,4 @@ export interface BillsSummariesByPaidStatus {
     unpaid: BillsSummary;
     all: BillsSummary
 }
+

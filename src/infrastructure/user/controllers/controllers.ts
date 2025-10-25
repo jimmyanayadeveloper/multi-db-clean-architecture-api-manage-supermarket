@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
-import { LoginUserDto, RegisterUserDto } from "../../domain/users";
-import { CustomError } from "../../domain";
-import { UserMongoseModel } from "../../infrastructure/datasources/mongo/models/user.model";
-import { RegisterUser } from "../../application/user/use-cases/register-user.use-case";
-import { LoginUser } from "../../application/user/use-cases/login-user.use-case";
+import { LoginUserDto, RegisterUserDto } from "../../../domain/users";
+import { CustomError } from "../../../domain";
+import { UserMongoseModel } from "../../datasources/mongo/models/user.model";
+import { RegisterUser } from "../../../application/user/use-cases/register-user.use-case";
+import { LoginUser } from "../../../application/user/use-cases/login-user.use-case";
 
 interface AuthControllerDeps {
     registerUserUseCase: RegisterUser;

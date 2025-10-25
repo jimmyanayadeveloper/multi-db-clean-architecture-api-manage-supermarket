@@ -44,11 +44,8 @@ export class BillDatasourceImp implements BillDatasource {
         }
     }
 
-    async edit(id: string, changes: Partial<BillEntity>): Promise<BillEntity | null> {
-        const bill = await this.repo.findOne({ where: { id } });
-        if (!bill) return null;
-        Object.assign(bill, changes);
-        const billUpdate = await this.repo.save(bill);
+    async edit(updateBill: Partial<BillEntity>): Promise<BillEntity | null> {
+        const billUpdate = await this.repo.save(updateBill);
         return BillAssembler.toEntity(billUpdate);
     }
 
@@ -111,7 +108,9 @@ export class BillDatasourceImp implements BillDatasource {
         return BillAssembler.toEntities(billFounds);
     }
 
-    async findById(id: string): Promise<BillEntity[] | null> {
-        throw new Error("Method not implemented.");
+    async findById(id: string): Promise<BillEntity | null> {
+        const billFound = await this.repo.findOne({ where: { id } });
+        if (!billFound) return null;
+        return BillAssembler.toEntity(billFound);
     }
 }

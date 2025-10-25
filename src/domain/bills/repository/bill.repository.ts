@@ -4,7 +4,8 @@ import { UpdateBillData } from "../../../application/bills/interfaces/dto/reques
 import { BillsSummariesByPaidStatus } from "../interface/bill-summaries";
 
 export interface BillRepository {
-    edit(id: string, changes: UpdateBillData): Promise<BillEntity | null>;
+    edit(changes: UpdateBillData): Promise<BillEntity | null>;
+    findById(uuid: string): Promise<BillEntity | null>;
     findByNumber(numberBill: string): Promise<BillEntity[] | null>;
     findByNumberBillAndProvider(numberBill: string, providerId: string): Promise<BillEntity | null>
     findByProvider(nameProvider: string): Promise<BillEntity[]>

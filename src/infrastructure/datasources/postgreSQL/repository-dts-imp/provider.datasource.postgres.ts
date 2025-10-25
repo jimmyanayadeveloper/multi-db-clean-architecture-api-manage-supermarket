@@ -1,35 +1,37 @@
-import { CreateProviderDto, ProviderDatasource, ProviderEntity, UpdateProviderDto } from "../../../../domain/providers";
-import { ProviderMapper } from "../../../mappers/provider.mapper";
-import { ProviderDts } from "../entities/provider.entities";
 import { PostgresDatabase } from "../postgres-database";
+import { ProviderDatasource, ProviderEntity } from "../../../../domain/providers";
+import { ProviderDts } from "../entities/provider.entities";
+import { ProviderMapper } from "../../../provider/mappers/provider.mapper";
+import { ILike } from "typeorm";
 
 export class ProviderDatasourceImp implements ProviderDatasource {
 
     private repo = PostgresDatabase.datasource.getRepository(ProviderDts);
 
-    async create(createProvider: CreateProviderDto): Promise<ProviderEntity> {
-        const providerSaved = await this.repo.save(this.repo.create(createProvider))
+    async create(createProvider: ProviderEntity): Promise<ProviderEntity> {
+        const provider = ProviderMapper.toDts(createProvider);
+        const providerSaved = await this.repo.save(this.repo.create(provider));
         return ProviderMapper.toEntity(providerSaved);
     }
 
-    async edit(id: string, changes: UpdateProviderDto): Promise<ProviderEntity | null> {
-        const provider = await this.repo.findOne({ where: { id } });
-        if (!provider) return null;
-        Object.assign(provider, changes);
-        const providerUpdate = await this.repo.save(provider);
+    async edit(providerDataChange: ProviderEntity): Promise<ProviderEntity> {
+        const providerUpdate = await this.repo.save(providerDataChange);
         return ProviderMapper.toEntity(providerUpdate)
     }
 
     async findById(id: string): Promise<ProviderEntity | null> {
         const provider = await this.repo.findOne({ where: { id } });
-        if (!provider) return null;
-        return ProviderMapper.toEntity(provider);
+        return provider ? ProviderMapper.toEntity(provider) : null;
     }
 
     async findByNit(nit: string): Promise<ProviderEntity | null> {
         const provider = await this.repo.findOne({ where: { nit } });
-        if (!provider) return null;
-        return ProviderMapper.toEntity(provider);
+        return provider ? ProviderMapper.toEntity(provider) : null;
+    }
+
+    async findByName(name: string): Promise<ProviderEntity | null> {
+        const provider = await this.repo.findOne({ where: { name: ILike(name) } });
+        return provider ? ProviderMapper.toEntity(provider) : null;
     }
 
     async findByTerm(term: string): Promise<ProviderEntity[]> {

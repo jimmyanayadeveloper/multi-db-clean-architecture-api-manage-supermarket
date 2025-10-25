@@ -3,7 +3,6 @@ import { Request, Response } from "express"
 import { CustomError } from "../../../domain";
 
 import { GetAllBills } from "../../../application/bills/use-cases/get-all-bills.use-case";
-import { GetBillByNumberDto } from "../../../application/bills/dto/get-bill-by-number.dto";
 import { GetBillByNumberID } from "../../../application/bills/use-cases/get-bill-by-id.use-case";
 import { GetBillsByProvider } from "../../../application/bills/use-cases/get-bills-by-provider.use-case";
 import { GetBillsByStatus } from "../../../application/bills/use-cases/get-bill-by-status.use-case";
@@ -12,12 +11,12 @@ import { PaidBill } from "../../../application/bills/use-cases/paid-bill.use-cas
 import { RegisterBill } from "../../../application/bills/use-cases/register-bill.use-case";
 import { UpdateBill } from "../../../application/bills/use-cases/update-bill.use-case";
 
-
-import { FindBillByIdDto } from "../../../application/bills/dto/assemblers/get-by-id.dto";
 import { parsePagination } from "../../shared/parsers/pagination.parser";
-import { RegisterBillDto } from "../../../application/bills/dto/assemblers/register-bill.dto";
-import { UpdateBillDto } from "../../../application/bills/dto/assemblers/update-bill.dto";
 import { BillResponseAssembler } from "./assembler.ts/assembler-bill-response";
+import { RegisterBillDto } from "../../../application/bills/dto/register-bill.dto";
+import { GetBillByNumberIdBillDto } from "../../../application/bills/dto/get-bill-by-number.dto";
+import { GetBillByIdEntityDto } from "../../../application/bills/dto/get-by-id.dto";
+import { UpdateBillDto } from "../../../application/bills/dto/update-bill.dto";
 
 
 interface BillControllerDeps {
@@ -52,7 +51,7 @@ export class BillsController {
     }
 
     public addNewBill = (req: Request, res: Response): void => {
-        const registerDto = RegisterBillDto.createRegisterBillDto(req.body);
+        const registerDto = RegisterBillDto.create(req.body);
         if (!registerDto.ok) {
             const error = registerDto.error as CustomError;
             res.status(error.statusCode).json({ message: error.message });
@@ -65,7 +64,7 @@ export class BillsController {
     }
 
     public getBillByNumberId = (req: Request, res: Response): void => {
-        const responseDto = GetBillByNumberDto.createGetBillByIdDto(req.params.numberBill);
+        const responseDto = GetBillByNumberIdBillDto.create(req.params.numberBill);
         if (!responseDto.ok) {
             res.status(400).json(responseDto.error);
             return;
@@ -89,7 +88,7 @@ export class BillsController {
     }
 
     public paidBill = (req: Request, res: Response): void => {
-        const findBillIdDto = FindBillByIdDto.create(req.params.id);
+        const findBillIdDto = GetBillByIdEntityDto.create(req.params.id);
         if (!findBillIdDto.ok) {
             const error = findBillIdDto.error as CustomError;
             res.status(error.statusCode).json({ message: error.message });
@@ -102,13 +101,22 @@ export class BillsController {
     }
 
     public updateBillById = (req: Request, res: Response): void => {
-        const responseDto = UpdateBillDto.create(req.body)
-        if (!responseDto.ok) {
-            res.status(400).json(responseDto.error);
+        console.log({ params: req.params.term, body: req.body })
+        const idBillEntityDto = GetBillByIdEntityDto.create(req.params.term);
+        if (!idBillEntityDto.ok) {
+            const error = idBillEntityDto.error as CustomError;
+            res.status(error.statusCode).json({ message: error.message });
             return;
         }
+        const changesBillDto = UpdateBillDto.create(req.body)
+        if (!changesBillDto.ok) {
+            const error = changesBillDto.error as CustomError;
+            res.status(error.statusCode).json({ message: error.message });
+            return;
+        }
+        console.log({ idBillEntityDto, changesBillDto })
         this.billDependencies.updateBill
-            .execute(req.params.term, responseDto.value.updateBillData)
+            .execute(idBillEntityDto.value.id, changesBillDto.value.updateBillData)
             .then(data => res.status(200).json(data))
             .catch(error => this.handleError(error, res))
     }
