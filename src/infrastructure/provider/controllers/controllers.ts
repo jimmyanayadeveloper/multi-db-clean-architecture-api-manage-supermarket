@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 
 import { CustomError } from "../../../domain";
-import { RegisterProviderDto } from "../../../domain/providers";
+import { ProviderEntity, RegisterProviderDto } from "../../../domain/providers";
 
 import { CreateProvider } from "../../../application/providers/use-cases/add-provider.use-case";
 import { DeleteProvider } from "../../../application/providers/use-cases/delete-provider.use-case";
@@ -49,18 +49,14 @@ export class ProviderController {
             .catch(error => this.handleError(error, res));
     }
 
-    public getAllProviders = (req: Request, res: Response): void => {
-        this.providerDependencies.showAllProvidersUseCase
-            .execute()
-            .then(data => res.json(data))
-            .catch(error => this.handleError(error, res));
+    public getAllProviders = async (req: Request, res: Response): Promise<void> => {
+        const providers = await this.providerDependencies.showAllProvidersUseCase.execute();
+        res.status(200).json(providers);
     }
 
-    public getProviderById = (req: Request, res: Response): void => {
-        this.providerDependencies.findProviderByIdUseCase
-            .execute(req.params.id)
-            .then(data => res.json(data))
-            .catch(error => this.handleError(error, res))
+    public getProviderById = async (req: Request, res: Response): Promise<void> => {
+        const provider = await this.providerDependencies.findProviderByIdUseCase.execute(req.params.id)
+        res.status(200).json(provider)
     }
 
     public getProviderByNit = (req: Request, res: Response): void => {

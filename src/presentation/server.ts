@@ -1,5 +1,6 @@
 import express, { Router } from 'express';
 import cors from 'cors';
+import { errorHandler } from './middlewares/error-handler.middleware';
 
 interface Options {
     port: number;
@@ -28,8 +29,13 @@ export class Server {
         this.app.use(express.json());
         this.app.use(express.urlencoded({ extended: true }));
 
+
         //* Routes
         this.app.use(this.routes);
+
+        //*Middleware to manage global errors
+        this.app.use(errorHandler);
+
 
         this.app.listen(this.port, () => {
             console.log(`Server running on port ${this.port}`);
