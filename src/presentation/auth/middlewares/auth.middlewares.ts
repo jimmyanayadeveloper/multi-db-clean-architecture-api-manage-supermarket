@@ -37,7 +37,5 @@ export class AuthMiddleware {
             console.log(error)
             res.status(500).json({ error: 'Internal server' })
         }
-
-
     }
 }

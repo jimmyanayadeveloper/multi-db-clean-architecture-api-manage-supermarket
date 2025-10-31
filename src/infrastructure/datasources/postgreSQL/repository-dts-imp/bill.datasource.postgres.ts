@@ -6,7 +6,7 @@ import { BillDts } from "../entities/bill.entities";
 import { BillAssembler } from "../../../bills/mappers/bill.assabler";
 import { BillMapper } from "../../../bills/mappers/bill.mapper";
 import { Pagination } from '../../../../domain/common/pagination';
-import { BillsSummariesByPaidStatus, BillsSummary } from "../../../../domain/bills/interface/bill-summaries";
+import { BillsSummariesByPaidStatus } from "../../../../domain/bills/interface/bill-summaries";
 
 export class BillDatasourceImp implements BillDatasource {
     private repo = PostgresDatabase.datasource.getRepository(BillDts)
@@ -44,7 +44,7 @@ export class BillDatasourceImp implements BillDatasource {
         }
     }
 
-    async edit(updateBill: Partial<BillEntity>): Promise<BillEntity | null> {
+    async edit(updateBill: BillEntity): Promise<BillEntity | null> {
         const billUpdate = await this.repo.save(updateBill);
         return BillAssembler.toEntity(billUpdate);
     }
@@ -109,7 +109,7 @@ export class BillDatasourceImp implements BillDatasource {
     }
 
     async findById(id: string): Promise<BillEntity | null> {
-        const billFound = await this.repo.findOne({ where: { id } });
+        const billFound = await this.repo.findOne({ where: { id }, relations: ['provider'] });
         if (!billFound) return null;
         return BillAssembler.toEntity(billFound);
     }

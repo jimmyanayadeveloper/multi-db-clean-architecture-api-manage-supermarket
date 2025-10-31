@@ -1,6 +1,7 @@
 import express, { Router } from 'express';
 import cors from 'cors';
 import { errorHandler } from './middlewares/error-handler.middleware';
+import { requestId, requestLogger } from './middlewares/request-logger.middleware';
 
 interface Options {
     port: number;
@@ -29,6 +30,10 @@ export class Server {
         this.app.use(express.json());
         this.app.use(express.urlencoded({ extended: true }));
 
+
+        // 🔗 Correlación + logging de entrada/salida
+        this.app.use(requestId);
+        this.app.use(requestLogger);
 
         //* Routes
         this.app.use(this.routes);

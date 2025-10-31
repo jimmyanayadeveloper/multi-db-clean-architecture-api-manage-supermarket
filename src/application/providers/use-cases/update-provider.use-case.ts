@@ -19,6 +19,6 @@ export class UpdateProvider implements UpdateProviderUseCase {
         const providerChanges = ProviderEntity.update(providerFoundById!, changesProvider.updateProviderData);
         const providerUpdated = await this.repository.edit(providerChanges);
         if (!providerUpdated) throw CustomError.notFound("Provider was not updated with success");
-        return providerUpdated
+        return providerUpdated;
     }
 }

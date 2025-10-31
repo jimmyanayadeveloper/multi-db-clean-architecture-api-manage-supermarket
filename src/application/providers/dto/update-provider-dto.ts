@@ -1,6 +1,5 @@
-import { RegisterProviderRequest } from '../dto/interfaces/request/register-provider.dto';
-import { DtoResult } from '../../bills/interfaces/response-dto';
 import { CustomError } from '../../../domain';
+import { RegisterProviderRequest } from '../../../domain/providers/interfaces/dto/RegisterProviderRequest';
 import { DeepSanitizer } from '../../../shared/helpers/deep-sanitizer.helper';
 import { InputNormalizer } from '../../../shared/helpers/input-normalizer.helper';
 
@@ -12,7 +11,7 @@ export class UpdateProviderDto {
         this.updateProviderData = data;
     }
 
-    static create(changes: Partial<RegisterProviderRequest>): DtoResult<UpdateProviderDto> {
+    static create(changes: Partial<RegisterProviderRequest>): UpdateProviderDto {
         try {
             const updateData: Partial<RegisterProviderRequest> = {
                 creditBalance: InputNormalizer.num(changes.creditBalance),
@@ -23,13 +22,13 @@ export class UpdateProviderDto {
                 saleWithCredit: InputNormalizer.bool(changes.saleWithCredit),
                 withholdingsTaxes: InputNormalizer.bool(changes.withholdingsTaxes),
             }
+
             const sanitizedChangesObj = DeepSanitizer.sanitize(updateData);
-            if (Object.keys(sanitizedChangesObj).length === 0)
-                return { ok: false, error: CustomError.badRequest("No exist data to change to update") }
-            return { ok: true, value: new UpdateProviderDto(sanitizedChangesObj) };
+            if (Object.keys(sanitizedChangesObj).length === 0) throw CustomError.badRequest("No exist data to change to update")
+            return new UpdateProviderDto(sanitizedChangesObj)
+
         } catch (error) {
-            const err = error instanceof CustomError ? error : CustomError.badRequest("Invalid data provided in update provider")
-            return { ok: false, error: err }
+            throw CustomError.badRequest("Invalid data provided in update provider")
         }
     }
 }

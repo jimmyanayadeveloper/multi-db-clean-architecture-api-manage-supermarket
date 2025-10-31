@@ -43,7 +43,7 @@ export class BillEntity {
         const updated = { ...actual, ...changes };
         return BillEntity.create({
             id: actual.id,
-            provider: updated.provider,
+            provider: actual.provider,
             numberBill: updated.numberBill,
             amountBill: updated.amountBill,
             dateIn: updated.dateIn,

@@ -1,4 +1,5 @@
-import { ProviderMin } from "../../../../../domain/bills/interface/bill-summaries";
+/* import { ProviderMin } from "../../../../../domain/providers/interfaces/provider-summaries";
+
 
 export interface RegisterBillData {
     provider: ProviderMin
@@ -18,3 +19,4 @@ export interface RegisterBillRequest {
     numberBill: string;
 }
 
+ */

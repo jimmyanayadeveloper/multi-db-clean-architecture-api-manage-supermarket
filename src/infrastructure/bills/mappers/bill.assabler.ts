@@ -6,8 +6,8 @@ export class BillAssembler {
         return BillEntity.create({
             id: dtsEntity.id ?? '',
             provider: {
-                id: dtsEntity.providerId ?? '',
-                name: dtsEntity.provider?.name ?? 'Nombre no disponible'
+                id: dtsEntity.provider.id ?? '',
+                name: dtsEntity.provider.name ?? 'Nombre no disponible'
             },
             numberBill: dtsEntity.numberBill,
             amountBill: dtsEntity.amountBill,

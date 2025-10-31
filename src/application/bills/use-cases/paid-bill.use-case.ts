@@ -1,9 +1,11 @@
 import { BillRepository } from "../../../domain/bills/repository/bill.repository";
-import { InputNormalizerOrFail } from "../../../shared/helpers/input-normalizer-or-fail.helper";
+import { BillDomainService } from "../../../domain/bills/services/bill-domain.service";
 
 export class PaidBill {
     constructor(private repository: BillRepository) { }
-    execute(idBill: string) {
-        return this.repository.payBill(idBill);
+    async execute(idBill: string) {
+        await BillDomainService.billWasPaid(this.repository, idBill);
+        const billPaid = await this.repository.payBill(idBill);
+        return billPaid;
     }
 } 

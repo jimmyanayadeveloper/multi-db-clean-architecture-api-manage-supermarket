@@ -46,11 +46,11 @@ export function initDependencies() {
     const registerUserUseCase = new RegisterUser(authRepository)
     /* Bills */
     const getBillByNumberBillUseCase = new GetBillByNumberID(billRepository);
-    const getBillsByProvider = new GetBillsByProvider(billRepository);
+    const getBillsByProvider = new GetBillsByProvider(billRepository, providerRepository);
     const getBillsByStatus = new GetBillsByStatus(billRepository);
     const getSummariesSlipByPaidStatus = new GetSummariesBillByStatusPaid(billRepository)
     const paidBill = new PaidBill(billRepository);
-    const registerNewBillUseCase = new RegisterBill(billRepository);
+    const registerNewBillUseCase = new RegisterBill(billRepository, providerRepository);
     const showAllBills = new GetAllBills(billRepository);
     const updateBill = new UpdateBill(billRepository);
     /* Providers */

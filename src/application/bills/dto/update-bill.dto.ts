@@ -2,42 +2,36 @@ import { CustomError } from "../../../domain";
 import { BillEntity } from "../../../domain/bills/entities/bill.entity";
 import { DeepSanitizer } from "../../../shared/helpers/deep-sanitizer.helper";
 import { InputNormalizer } from "../../../shared/helpers/input-normalizer.helper";
-import { RegisterBillData } from "../interfaces/dto/request/register.dto";
 import { UpdateBillData } from "../interfaces/dto/request/update.dto";
-import { DtoResult } from "../interfaces/response-dto";
+import { RegisterBillRequest } from "../../../domain/bills/interface/dto/update-bill-request.interface";
 
 export class UpdateBillDto {
 
-    public readonly updateBillData: Partial<RegisterBillData>
+    public readonly updateBillData: Partial<BillEntity>
 
-    constructor(data: Partial<RegisterBillData>) {
+    constructor(data: Partial<BillEntity>) {
         this.updateBillData = data
     }
 
-    static create(changes: Partial<BillEntity>): DtoResult<UpdateBillDto> {
+    static create(changes: Partial<RegisterBillRequest>): UpdateBillDto {
 
         try {
-            if (!changes || Object.keys(changes).length === 0)
-                return { ok: false, error: CustomError.badRequest('No exist update data to change') }
+            if (!changes || Object.keys(changes).length === 0) throw CustomError.badRequest('No exist update data to change')
 
             const updateData: UpdateBillData = {
                 provider: { id: InputNormalizer.str(changes.provider?.id), name: InputNormalizer.str(changes.provider?.name) },
                 numberBill: InputNormalizer.str(changes.numberBill),
                 amountBill: InputNormalizer.num(changes.amountBill),
                 dateIn: InputNormalizer.date(changes.dateIn),
-                payDate: InputNormalizer.date(changes.datePaid)
+                payDate: InputNormalizer.date(changes.payDate)
             }
 
             const sanitizedChangesObj = DeepSanitizer.sanitize(updateData);
 
-            if (Object.keys(sanitizedChangesObj).length === 0)
-                return { ok: false, error: CustomError.badRequest("No exist data to update") }
-
-            return { ok: true, value: new UpdateBillDto(sanitizedChangesObj as RegisterBillData) }
-
+            if (Object.keys(sanitizedChangesObj).length === 0) throw CustomError.badRequest("No exist data to update");
+            return new UpdateBillDto(sanitizedChangesObj as Partial<BillEntity>);
         } catch (error) {
-            const err = error instanceof CustomError ? error : CustomError.badRequest("Invalid data provided in update bill ")
-            return { ok: false, error: err }
+            throw CustomError.badRequest("Invalid data provided in update bill " + error);
         }
     }
 }

@@ -1,17 +1,19 @@
 import { Request, Response } from "express";
 
-import { CustomError } from "../../../domain";
-import { ProviderEntity, RegisterProviderDto } from "../../../domain/providers";
-
 import { CreateProvider } from "../../../application/providers/use-cases/add-provider.use-case";
 import { DeleteProvider } from "../../../application/providers/use-cases/delete-provider.use-case";
-import { ShowAllProvider } from '../../../application/providers/use-cases/get-all-provider.use-case';
-import { ProviderByTerm } from "../../../application/providers/use-cases/get-provider-term.use-case";
-import { UpdateProvider } from "../../../application/providers/use-cases/update-provider.use-case";
-import { UpdateProviderDto } from "../../../application/providers/dto/update-provider-dto";
 import { GetProviderById } from "../../../application/providers/use-cases/get-provider-by-id.use-case";
 import { GetProviderByName } from "../../../application/providers/use-cases/get-provider-by-name.use-case";
 import { GetProviderByNit } from "../../../application/providers/use-cases/get-provider-by-nit.use-case";
+import { ProviderByTerm } from "../../../application/providers/use-cases/get-provider-term.use-case";
+import { ShowAllProvider } from '../../../application/providers/use-cases/get-all-provider.use-case';
+import { UpdateProvider } from "../../../application/providers/use-cases/update-provider.use-case";
+
+import { UpdateProviderDto } from "../../../application/providers/dto/update-provider-dto";
+import { RegisterProviderDto } from "../../../application/providers/dto/create-provider-dto";
+
+import { InputNormalizerOrFail } from "../../../shared/helpers/input-normalizer-or-fail.helper";
+
 
 interface ProviderControllerDeps {
     createProviderUseCase: CreateProvider;
@@ -30,23 +32,10 @@ export class ProviderController {
         private readonly providerDependencies: ProviderControllerDeps
     ) { }
 
-    private handleError = (error: unknown, res: Response) => {
-        if (error instanceof CustomError) return res.status(error.statusCode).json({ error: error.message });
-        console.log(error); // Winston
-        return res.status(500).json({ error: 'Internal Server Error' });
-    }
-
-    public createNewProvider = (req: Request, res: Response): void => {
+    public createNewProvider = async (req: Request, res: Response): Promise<void> => {
         const registerDto = RegisterProviderDto.create(req.body);
-        if (!registerDto.ok) {
-            const error = registerDto.error as CustomError;
-            res.status(error.statusCode).json({ message: error.message });
-            return;
-        };
-        this.providerDependencies.createProviderUseCase
-            .execute(registerDto.value)
-            .then(data => res.status(201).json(data))
-            .catch(error => this.handleError(error, res));
+        const providerSaved = await this.providerDependencies.createProviderUseCase.execute(registerDto);
+        res.status(201).json(providerSaved);
     }
 
     public getAllProviders = async (req: Request, res: Response): Promise<void> => {
@@ -55,54 +44,36 @@ export class ProviderController {
     }
 
     public getProviderById = async (req: Request, res: Response): Promise<void> => {
-        const provider = await this.providerDependencies.findProviderByIdUseCase.execute(req.params.id)
-        res.status(200).json(provider)
+        const idToFindProvider = InputNormalizerOrFail.uuid(req.params.id, 'Id to find provider');
+        const provider = await this.providerDependencies.findProviderByIdUseCase.execute(idToFindProvider);
+        res.status(200).json(provider);
     }
 
-    public getProviderByNit = (req: Request, res: Response): void => {
-        this.providerDependencies.findProviderByNitUseCase
-            .execute(req.params.nit)
-            .then(data => res.json(data))
-            .catch(error => this.handleError(error, res));
+    public getProviderByNit = async (req: Request, res: Response): Promise<void> => {
+        const provider = await this.providerDependencies.findProviderByNitUseCase.execute(req.params.nit);
+        res.status(200).json(provider);
     }
 
-    public getProviderByName = (req: Request, res: Response): void => {
-        this.providerDependencies.findProviderByNameUseCase
-            .execute(req.params.name)
-            .then(data => res.json(data))
-            .catch(error => this.handleError(error, res));
+    public getProviderByName = async (req: Request, res: Response): Promise<void> => {
+        const provider = await this.providerDependencies.findProviderByNameUseCase.execute(req.params.name);
+        res.status(200).json(provider);
     }
 
-    public getProviderByTerm = (req: Request, res: Response): void => {
-        this.providerDependencies.findProviderByTermUseCase
-            .execute(req.params.term)
-            .then(data => res.json(data))
-            .catch(error => this.handleError(error, res))
+    public getProviderByTerm = async (req: Request, res: Response): Promise<void> => {
+        const provider = await this.providerDependencies.findProviderByTermUseCase.execute(req.params.term);
+        res.status(200).json(provider);
     }
 
-    public updatedProviderById = (req: Request, res: Response): void => {
-        const responseDto = UpdateProviderDto.create(req.body);
-        if (!responseDto.ok) {
-            const error = responseDto.error as CustomError;
-            res.status(error.statusCode).json({ message: error.message });
-            return
-        }
-        this.providerDependencies.updateProviderByIdUseCase
-            .execute(req.params.id, responseDto.value)
-            .then(data => res.json(data))
-            .catch(error => this.handleError(error, res))
+    public updatedProviderById = async (req: Request, res: Response): Promise<void> => {
+        const idToFindProvider = InputNormalizerOrFail.uuid(req.params.id, 'Id to find provider');
+        const updateDto = UpdateProviderDto.create(req.body);
+        const updatedProvider = await this.providerDependencies.updateProviderByIdUseCase.execute(idToFindProvider, updateDto);
+        res.status(200).json(updatedProvider);
     }
 
-    public deleteProviderById = (req: Request, res: Response): void => {
-        this.providerDependencies.deleteProviderByIdUseCase
-            .execute(req.params.id)
-            .then(data => {
-                if (data) {
-                    res.json({ message: 'Provider sucess inactivate' })
-                } else {
-                    res.json({ message: 'Provider fault inactivate' })
-                }
-            })
-            .catch(error => this.handleError(error, res))
+    public deleteProviderById = async (req: Request, res: Response): Promise<void> => {
+        const idToFindProvider = InputNormalizerOrFail.uuid(req.params.id, 'Id to find provider');
+        await this.providerDependencies.deleteProviderByIdUseCase.execute(idToFindProvider);
+        res.status(200).json({ message: `Provider with id ${idToFindProvider} was inactivated` });
     }
 }

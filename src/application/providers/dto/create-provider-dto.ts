@@ -1,4 +1,3 @@
-import { DtoResult } from "../../bills/interfaces/response-dto";
 import { RegisterProviderRequest } from "./interfaces/request/register-provider.dto";
 import { validationRegisterProvider } from "./validation/validation-register-provider.dto";
 
@@ -21,9 +20,8 @@ export class RegisterProviderDto {
         this.creditDays = dataProvider.creditDays || 0;
     }
 
-    static create(props: RegisterProviderRequest): DtoResult<RegisterProviderDto> {
+    static create(props: RegisterProviderRequest): RegisterProviderDto {
         const validationResponse = validationRegisterProvider(props);
-        if (!validationResponse.ok) return validationResponse;
-        return { ok: true, value: new RegisterProviderDto(validationResponse.value) }
+        return new RegisterProviderDto(validationResponse);
     }
 }
