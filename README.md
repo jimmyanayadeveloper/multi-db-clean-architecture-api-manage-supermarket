@@ -1,0 +1,2 @@
+# multi-db-clean-architecture-api-manage-supermarket
+This Backend project  is a modular RESTful API built with Node.js. designed follows Clean Architecture principles, with capacity to intregrates multiplates databases (MongoDB for authentication and PostgresSQL for business features such as bills and providers ), and implements a global logging strategy for error tracking and perfomance monitoring.
