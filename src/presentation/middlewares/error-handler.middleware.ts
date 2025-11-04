@@ -1,22 +1,24 @@
 import { ErrorRequestHandler, NextFunction, Request, Response } from "express";
-import { CustomError } from "../../domain";
+import { CustomError } from "../../domain";;
+import { getRequestLogger } from "../../shared/logger";
 
 export const errorHandler: ErrorRequestHandler = (err: any, req: Request, res: Response, next: NextFunction) => {
 
-    console.error("[Global error handler]");
+    const requestId = req.requestId;
+    const log = getRequestLogger(requestId);
+    const isCustom = err instanceof CustomError;
+    const statusCode = isCustom ? err.statusCode : 500;
+    const message = isCustom ? err.message : "Internal server error";
 
-    if (err instanceof CustomError) {
-        console.log("This is a custom error", err.message)
-        res.status(err.statusCode).json({
-            status: "error",
-            message: err.message
-        });
-        return
-    }
+    log.error(`[ERROR] ${message}`, {
+        name: err.name,
+        stack: err.stack,
+        statusCode
+    });
 
-    res.status(500).json({
+    res.status(statusCode).json({
         status: "error",
-        message: "Internal server error"
-    })
-
-}
+        message,
+        requestId
+    });
+};

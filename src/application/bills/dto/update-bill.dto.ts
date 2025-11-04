@@ -2,7 +2,6 @@ import { CustomError } from "../../../domain";
 import { BillEntity } from "../../../domain/bills/entities/bill.entity";
 import { DeepSanitizer } from "../../../shared/helpers/deep-sanitizer.helper";
 import { InputNormalizer } from "../../../shared/helpers/input-normalizer.helper";
-import { UpdateBillData } from "../interfaces/dto/request/update.dto";
 import { RegisterBillRequest } from "../../../domain/bills/interface/dto/update-bill-request.interface";
 
 export class UpdateBillDto {
@@ -18,12 +17,10 @@ export class UpdateBillDto {
         try {
             if (!changes || Object.keys(changes).length === 0) throw CustomError.badRequest('No exist update data to change')
 
-            const updateData: UpdateBillData = {
-                provider: { id: InputNormalizer.str(changes.provider?.id), name: InputNormalizer.str(changes.provider?.name) },
+            const updateData: Partial<BillEntity> = {
                 numberBill: InputNormalizer.str(changes.numberBill),
                 amountBill: InputNormalizer.num(changes.amountBill),
                 dateIn: InputNormalizer.date(changes.dateIn),
-                payDate: InputNormalizer.date(changes.payDate)
             }
 
             const sanitizedChangesObj = DeepSanitizer.sanitize(updateData);

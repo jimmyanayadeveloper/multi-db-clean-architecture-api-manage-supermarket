@@ -13,6 +13,7 @@ import { UpdateProviderDto } from "../../../application/providers/dto/update-pro
 import { RegisterProviderDto } from "../../../application/providers/dto/create-provider-dto";
 
 import { InputNormalizerOrFail } from "../../../shared/helpers/input-normalizer-or-fail.helper";
+import { parsePagination } from "../../shared/parsers/pagination.parser";
 
 
 interface ProviderControllerDeps {
@@ -39,7 +40,8 @@ export class ProviderController {
     }
 
     public getAllProviders = async (req: Request, res: Response): Promise<void> => {
-        const providers = await this.providerDependencies.showAllProvidersUseCase.execute();
+        const pagination = parsePagination(req.query);
+        const providers = await this.providerDependencies.showAllProvidersUseCase.execute(pagination);
         res.status(200).json(providers);
     }
 

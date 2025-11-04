@@ -1,13 +1,14 @@
 // src/presentation/middlewares/request-logger.middleware.ts
 import { NextFunction, Request, Response } from "express";
 import { randomUUID } from "crypto";
+import { getRequestLogger } from "../../shared/logger";
 
 // Extend request interface to add two optional properties 
 declare global {
     namespace Express {
         interface Request {
             requestId?: string;
-            userId?: string; // si más adelante agregas auth
+            userId?: string;
         }
     }
 }
@@ -37,7 +38,6 @@ function redactDeep<T>(value: T): T {
         }
         return out;
     }
-
     return value;
 }
 
@@ -60,7 +60,8 @@ export function requestId(req: Request, _res: Response, next: NextFunction) {
 // Logger por request: inicio/fin, tiempos y contexto
 export function requestLogger(req: Request, res: Response, next: NextFunction) {
     const start = process.hrtime.bigint();
-    const id = req.requestId;
+    const id = req.requestId ?? randomUUID();
+    const log = getRequestLogger(id);
     const routeInfo = `${req.method} ${req.originalUrl}`;
 
     // Logs de entrada (con redacción)
@@ -68,14 +69,16 @@ export function requestLogger(req: Request, res: Response, next: NextFunction) {
     const inQuery = redactDeep(req.query);
     const inBody = redactDeep(req.body);
 
-    console.log(
-        `[REQ] ${id} :: ${routeInfo} :: params=${safeJson(inParams)} :: query=${safeJson(inQuery)} :: body=${safeJson(inBody)}`
-    );
+    log.info(`[REQ] ${routeInfo}`, {
+        params: safeJson(inParams),
+        query: safeJson(inQuery),
+        body: safeJson(inBody)
+    })
 
     // Hook ending response
     res.on("finish", () => {
         const durMs = Number(process.hrtime.bigint() - start) / 1_000_000;
-        console.log(`[RES] ${id} :: ${routeInfo} :: ${res.statusCode} :: ${durMs.toFixed(1)}ms`);
+        log.info(`[RES] ${routeInfo}`, { statusCode: res.statusCode, durationMs: durMs.toFixed(2) });
     });
 
     next();

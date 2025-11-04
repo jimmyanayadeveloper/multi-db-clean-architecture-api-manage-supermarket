@@ -1,3 +1,4 @@
+import { Pagination } from "../../../domain/common/pagination";
 import { ProviderDatasource, ProviderEntity, ProviderRepository } from "../../../domain/providers";
 
 export class ProviderRepositoryImpl implements ProviderRepository {
@@ -24,7 +25,7 @@ export class ProviderRepositoryImpl implements ProviderRepository {
     inactivate(id: string): Promise<boolean> {
         return this.datasource.inactivate(id);
     }
-    showAll(): Promise<ProviderEntity[]> {
-        return this.datasource.showAll()
+    showAll(pagination: Pagination): Promise<[ProviderEntity[], number]> {
+        return this.datasource.showAll(pagination)
     }
 }

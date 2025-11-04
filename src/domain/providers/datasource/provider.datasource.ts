@@ -1,3 +1,4 @@
+import { Pagination } from "../../common/pagination";
 import { ProviderEntity } from "../entities/provider.entity";
 
 export interface ProviderDatasource {
@@ -8,5 +9,5 @@ export interface ProviderDatasource {
     findByNit(id: string): Promise<ProviderEntity | null>;
     findByTerm(term: string): Promise<ProviderEntity[]>;
     inactivate(id: string): Promise<boolean>;
-    showAll(): Promise<ProviderEntity[]>;
+    showAll(pagination: Pagination): Promise<[ProviderEntity[], number]>;
 }

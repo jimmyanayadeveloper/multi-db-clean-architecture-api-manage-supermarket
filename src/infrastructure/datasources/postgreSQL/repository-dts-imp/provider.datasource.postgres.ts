@@ -3,6 +3,7 @@ import { ProviderDatasource, ProviderEntity } from "../../../../domain/providers
 import { ProviderDts } from "../entities/provider.entities";
 import { ProviderMapper } from "../../../provider/mappers/provider.mapper";
 import { ILike } from "typeorm";
+import { Pagination } from "../../../../domain/common/pagination";
 
 export class ProviderDatasourceImp implements ProviderDatasource {
 
@@ -51,8 +52,11 @@ export class ProviderDatasourceImp implements ProviderDatasource {
         return true;
     }
 
-    async showAll(): Promise<ProviderEntity[]> {
-        const providers = await this.repo.find()
-        return ProviderMapper.toEntities(providers);
+    async showAll({ page, limit }: Pagination): Promise<[ProviderEntity[], number]> {
+        const [providers, total] = await this.repo.findAndCount({
+            skip: (page - 1) * limit,
+            take: limit
+        })
+        return [ProviderMapper.toEntities(providers), total];
     }
 }

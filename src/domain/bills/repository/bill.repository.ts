@@ -1,10 +1,9 @@
 import { Pagination } from "../../common/pagination";
 import { BillEntity } from "../entities/bill.entity";
-import { UpdateBillData } from "../../../application/bills/interfaces/dto/request/update.dto";
 import { BillsSummariesByPaidStatus } from "../interface/bill-summaries";
 
 export interface BillRepository {
-    edit(changes: UpdateBillData): Promise<BillEntity | null>;
+    edit(changes: BillEntity): Promise<BillEntity | null>;
     findById(uuid: string): Promise<BillEntity | null>;
     findByNumber(numberBill: string): Promise<BillEntity[] | null>;
     findByNumberBillAndProvider(numberBill: string, providerId: string): Promise<BillEntity | null>
