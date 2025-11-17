@@ -9,3 +9,9 @@ export interface BillsSummariesByPaidStatus {
     all: BillsSummary
 }
 
+export interface BillMinResponse {
+    providerName: string,
+    numberBill: string,
+    amount: number
+}
+
